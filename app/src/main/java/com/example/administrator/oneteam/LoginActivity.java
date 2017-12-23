@@ -1,5 +1,6 @@
 package com.example.administrator.oneteam;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
@@ -35,22 +36,22 @@ public class LoginActivity extends AppCompatActivity {
         et_userName = (EditText) findViewById(R.id.user_name_edit);
         et_userPassword = (EditText)findViewById(R.id.user_pwd_edit);
         btn_signIn = (Button) findViewById(R.id.sign_in);
-        btn_logIn = (Button) findViewById(R.id.log_in);
+//        btn_logIn = (Button) findViewById(R.id.log_in);
     }
 
     private void bindListeners(){
 
-        btn_logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        btn_logIn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(LoginActivity.this, Main.class);
+                startActivity(intent);
             }
         });
 
