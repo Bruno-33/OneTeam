@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.oneteam.LoginActivity"
-    android:background="@mipmap/login_bg"
-    android:layerType="hardware"
-    android:alpha="0.8">
+    android:background="#FFF">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/user_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/circle"
         android:src="@mipmap/vincent"
@@ -23,121 +21,132 @@
         />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/user_name_view"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
+        android:id="@+id/wrapper_login_activity"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
         android:background="@drawable/round_rect"
-        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image"
-        android:alpha="0.825">
+        app:layout_constraintTop_toBottomOf="@id/user_image">
 
-        <TextView
-            android:id="@+id/user_name_label"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="用户"
-            android:textSize="18sp" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/user_name_view"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:alpha="0.825"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
-        <View
-            android:id="@+id/line_one"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#AAAAAA"
-            app:layout_constraintLeft_toRightOf="@+id/user_name_label" />
+            <TextView
+                android:id="@+id/user_name_label"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="用户"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/user_name_edit"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:background="@null"
-            android:hint="请输入名称"
-            app:layout_constraintLeft_toRightOf="@id/line_one" />
+            <View
+                android:id="@+id/line_one"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#AAAAAA"
+                app:layout_constraintLeft_toRightOf="@+id/user_name_label" />
 
-        <ImageView
-            android:id="@+id/user_name_clear_tool"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            <EditText
+                android:id="@+id/user_name_edit"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                android:hint="请输入名称"
+                app:layout_constraintLeft_toRightOf="@id/line_one" />
+
+            <ImageView
+                android:id="@+id/user_name_clear_tool"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/clear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/user_pwd_view"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:alpha="0.825"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@mipmap/clear"/>
+            app:layout_constraintTop_toBottomOf="@+id/user_name_view">
+
+            <TextView
+                android:id="@+id/user_pwd_label"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="密码"
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/line_two"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#AAAAAA"
+                app:layout_constraintLeft_toRightOf="@+id/user_pwd_label" />
+
+            <EditText
+                android:id="@+id/user_pwd_edit"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                app:layout_constraintLeft_toRightOf="@id/line_two" />
+
+            <ImageView
+                android:id="@+id/user_pwd_clear_tool"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/clear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/user_pwd_view"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_view"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:background="@drawable/round_rect"
-        android:alpha="0.825">
-        <TextView
-            android:id="@+id/user_pwd_label"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="密码"
-            android:textSize="18sp"/>
-
-        <View
-            android:id="@+id/line_two"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#AAAAAA"
-            app:layout_constraintLeft_toRightOf="@+id/user_pwd_label"/>
-
-        <EditText
-            android:id="@+id/user_pwd_edit"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            app:layout_constraintLeft_toRightOf="@id/line_two"
-            android:layout_marginStart="20dp"
-            android:background="@null"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
-            />
-
-        <ImageView
-            android:id="@+id/user_pwd_clear_tool"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@mipmap/clear"/>
-    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:id="@+id/sign_in"
-        android:layout_width="120dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="@id/user_pwd_view"
-        app:layout_constraintTop_toBottomOf="@id/user_pwd_view"
-        android:background="@drawable/round_rect_color"
+
         android:layout_marginTop="60dp"
-        android:layout_marginStart="20dp"
-        android:text="注册"
+        android:background="@drawable/round_rect_color"
+        android:text="SIGN IN"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
-        android:textColor="#FFFFFF"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wrapper_login_activity" />
 
     <Button
         android:id="@+id/log_in"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/user_pwd_view"
-        app:layout_constraintTop_toBottomOf="@id/user_pwd_view"
+        app:layout_constraintRight_toRightOf="@id/wrapper_login_activity"
+        app:layout_constraintTop_toBottomOf="@id/wrapper_login_activity"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_rect_color"
         android:text="登陆"
         android:textSize="18sp"
         android:textColor="#FFFFFF"/>
+
 </android.support.constraint.ConstraintLayout>

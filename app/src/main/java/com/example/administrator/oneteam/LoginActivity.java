@@ -2,6 +2,7 @@ package com.example.administrator.oneteam;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -79,14 +80,26 @@ public class LoginActivity extends AppCompatActivity {
 //            photo.setImageBitmap(loadImage("my1.PNG"));
 //        else
 //            Log.e("22222222222","33333333333");
+
+//        btn_logIn = (Button) findViewById(R.id.log_in);
+
     }
     private void bindListeners(){
+
         btn_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+
+
+//        btn_logIn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
+
 
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }.start();
+                Intent intent = new Intent(LoginActivity.this, Main.class);
+                startActivity(intent);
             }
         });
 
