@@ -20,8 +20,12 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.oneteam.Utils.ContactFragment;
 import com.example.administrator.oneteam.Utils.FragmentAdapter;
+import com.example.administrator.oneteam.Utils.InfoFragment;
+import com.example.administrator.oneteam.Utils.SelfTaskFragment;
 import com.example.administrator.oneteam.Utils.TabFragment;
+import com.example.administrator.oneteam.Utils.TaskPoolFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,10 +77,10 @@ public class Main extends AppCompatActivity
 
 
         mFragments = new ArrayList<>();
-        mFragments.add(TabFragment.newInstance());
-        mFragments.add(TabFragment.newInstance());
-        mFragments.add(TabFragment.newInstance());
-        mFragments.add(TabFragment.newInstance());
+        mFragments.add(SelfTaskFragment.newInstance());
+        mFragments.add(TaskPoolFragment.newInstance());
+        mFragments.add(ContactFragment.newInstance());
+        mFragments.add(InfoFragment.newInstance());
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments, Arrays.asList(titles));
         mViewPager.setAdapter(fragmentAdapter);
