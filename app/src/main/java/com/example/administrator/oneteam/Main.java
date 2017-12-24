@@ -1,8 +1,13 @@
 package com.example.administrator.oneteam;
 
+import android.app.Fragment;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,25 +17,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.administrator.oneteam.Utils.FragmentAdapter;
+import com.example.administrator.oneteam.Utils.TabFragment;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.example.administrator.oneteam.R.color.colorPrimary;
 
 public class Main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "Main";
+
+    private String[] titles = new String[]{"微信", "通讯录", "发现", "我"};
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private FragmentAdapter fragmentAdapter;
+    private List<android.support.v4.app.Fragment>mFragments;
+    private List<String> mTitles;
+    private int[] mImgs=new int[]{
+            R.drawable.self_task,
+            R.drawable.task_pool,
+            R.drawable.contact,
+            R.drawable.info
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +65,53 @@ public class Main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //region TabLayout
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager_contain_main);
+        mTabLayout = (TabLayout) findViewById(R.id.tablayput_contain_main);
+
+
+        mFragments = new ArrayList<>();
+        mFragments.add(TabFragment.newInstance());
+        mFragments.add(TabFragment.newInstance());
+        mFragments.add(TabFragment.newInstance());
+        mFragments.add(TabFragment.newInstance());
+
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments, Arrays.asList(titles));
+        mViewPager.setAdapter(fragmentAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i(TAG, "onPageSelected: " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        for (int i = 0; i < titles.length; i++){
+            TabLayout.Tab itemTab = mTabLayout.getTabAt(i);
+            if (itemTab != null){
+                itemTab.setCustomView(R.layout.item_tab);
+                ImageView imageView = itemTab.getCustomView().findViewById(R.id.icon_item_tab);
+                imageView.setImageResource(mImgs[i]);
+            }
+        }
+
+        mTabLayout.getTabAt(0).getCustomView().setSelected(true);
+        //endregion
+
+
     }
 
     @Override
