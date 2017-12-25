@@ -22,7 +22,11 @@ public class TaskPoolFragment  extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.task_pool_fragment, null);
+        View view = inflater.inflate(R.layout.task_pool_fragment, null);
+
+
+
+        return view;
     }
 
     @Override
