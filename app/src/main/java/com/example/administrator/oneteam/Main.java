@@ -56,13 +56,13 @@ public class Main extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -93,6 +93,12 @@ public class Main extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 Log.i(TAG, "onPageSelected: " + position);
+                if (position == 3){
+                    toolbar.setVisibility(View.GONE);
+                }
+                else{
+                    toolbar.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -114,8 +120,7 @@ public class Main extends AppCompatActivity
 
         mTabLayout.getTabAt(0).getCustomView().setSelected(true);
         //endregion
-
-
+        
     }
 
     @Override

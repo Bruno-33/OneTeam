@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,15 +10,139 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/bg_info"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/bg" />
+
         <TextView
-            android:id="@+id/text_view_self_task"
+            android:id="@+id/name_text_info"
+            android:layout_width="78dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:text="OneTeam"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/bg_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/sign_in_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UserInfo"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text_info"
+            app:srcCompat="@mipmap/sign_in" />
+
+        <ImageView
+            android:id="@+id/phone_icon_info"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/bg_info"
+            app:srcCompat="@mipmap/phone_filled" />
+
+        <TextView
+            android:id="@+id/phone_text_info"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center_vertical"
+            android:text="123456789"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_icon_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/phone_icon_info"
+            app:layout_constraintTop_toTopOf="@+id/phone_icon_info" />
+
+        <ImageView
+            android:id="@+id/mail_icon_info"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone_icon_info"
+            app:srcCompat="@mipmap/mail" />
+
+        <TextView
+            android:id="@+id/mail_text_info"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center_vertical"
+            android:text="12312312@qq.com"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/mail_icon_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mail_icon_info"
+            app:layout_constraintTop_toTopOf="@+id/mail_icon_info" />
+
+        <ImageView
+            android:id="@+id/position_icon_info"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mail_icon_info"
+            app:srcCompat="@mipmap/position" />
+
+        <TextView
+            android:id="@+id/position_text_info"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center_vertical"
+            android:text="大队长"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/position_icon_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/position_icon_info"
+            app:layout_constraintTop_toTopOf="@+id/position_icon_info" />
+
+        <ImageView
+            android:id="@+id/eb_icon_info"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/position_icon_info"
+            app:srcCompat="@mipmap/eb" />
+
+        <TextView
+            android:id="@+id/eb_text_info"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center_vertical"
+            android:text="本科"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eb_icon_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/eb_icon_info"
+            app:layout_constraintTop_toTopOf="@+id/eb_icon_info" />
+
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
