@@ -66,6 +66,9 @@ public class LoginActivity extends AppCompatActivity {
                                 photo.setImageBitmap(loadImage("my1.PNG"));
                         }
                     });
+                    Log.e("get",String.valueOf(33));
+                    http.UploadPicture("http://172.18.92.176:3333/test",Environment.getExternalStorageDirectory().getAbsolutePath() + "/public/my1.PNG" );
+                    Log.e("get",String.valueOf(35));
                 }  catch (Exception e) {//异常处理
                     e.printStackTrace();
                     mHandler.post( new Runnable(){
@@ -115,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                     btn_logIn.setText(in);
                                 }
                             });
+
                         }  catch (Exception e) {//异常处理
                             mHandler.post( new Runnable() {
                                 public void run() {
@@ -165,8 +169,7 @@ public class LoginActivity extends AppCompatActivity {
     public static Bitmap loadImage(String name) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/public/" + name;
         File mFile = new File(path);
-        //若该文件存在
-        if (mFile.exists()) {
+        if (mFile.exists()){
             Bitmap bitmap = BitmapFactory.decodeFile(path);
             return bitmap;
         }
