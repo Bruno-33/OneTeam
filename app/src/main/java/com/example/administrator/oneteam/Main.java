@@ -119,7 +119,7 @@ public class Main extends AppCompatActivity
 
         mTabLayout.getTabAt(0).getCustomView().setSelected(true);
         //endregion
-        
+
     }
 
     @Override
