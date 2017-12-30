@@ -89,7 +89,6 @@ public class Main extends AppCompatActivity
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
                 Log.i(TAG, "onPageSelected: " + position);
