@@ -5,72 +5,48 @@
     android:paddingTop="50dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-<<<<<<< HEAD
-        android:layout_marginTop="0dp"
-        android:id="@+id/reflash"
-        app:srlDisableContentWhenLoading="true"
-        app:srlDisableContentWhenRefresh="true"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-        <LinearLayout
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <android.support.v7.widget.RecyclerView
-
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/self_task_recyclerview"
-                >
-            </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:id="@+id/reflash"
+            app:srlDisableContentWhenLoading="true"
+            app:srlDisableContentWhenRefresh="true"
+            xmlns:android="http://schemas.android.com/apk/res/android">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="#CCC"
-                    />
-                <TextView
-                    android:layout_weight="0"
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="早上好，今天请继续努力"
-                    android:textSize="13sp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:id="@+id/bottom_text"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="#CCC"
-                    />
+                    android:id="@+id/self_task_recyclerview"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+
             </LinearLayout>
 
-        </LinearLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-=======
-        android:paddingTop="60dp">
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <!--<com.example.administrator.oneteam.tools.GreetingText-->
+            <!--android:id="@+id/gt_self_task_fragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_below="@id/reflash"-->
+            <!--/>-->
 
-        <com.example.administrator.oneteam.tools.GreetingText
-            android:id="@+id/gt_self_task_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-    </android.support.constraint.ConstraintLayout>
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
+    </RelativeLayout>
 
 </LinearLayout>

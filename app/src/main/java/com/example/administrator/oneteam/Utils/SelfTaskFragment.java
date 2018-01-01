@@ -1,11 +1,8 @@
 package com.example.administrator.oneteam.Utils;
 
-<<<<<<< HEAD
 import android.content.Intent;
 import android.graphics.Paint;
-=======
 import android.annotation.SuppressLint;
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.oneteam.R;
-<<<<<<< HEAD
 import com.example.administrator.oneteam.model.Task;
 import com.example.administrator.oneteam.tools.CommonAdapter;
 import com.example.administrator.oneteam.tools.ViewHolder;
@@ -46,11 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
+
 import java.util.logging.LogRecord;
-=======
 import com.example.administrator.oneteam.tools.GreetingText;
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
+
 
 /**
  * Created by D105-01 on 2017/12/24.
@@ -58,17 +53,13 @@ import com.example.administrator.oneteam.tools.GreetingText;
 
 public class SelfTaskFragment extends Fragment {
 
-<<<<<<< HEAD
     private RecyclerView self_task_rv;
     private View view;
     private CommonAdapter<Task> commonAdapter;
     private List<Task> datalist;
     private SmartRefreshLayout refresh;
-    private Handler handler;
     private int [] all_star = new int[]{R.id.item_star1,R.id.item_star2,R.id.item_star3,R.id.item_star4,R.id.item_star5};
-=======
     private static final int UPDATE_GREETING_TEXT = 1;
-
     private GreetingText gt_greetingText;
 
 
@@ -93,37 +84,23 @@ public class SelfTaskFragment extends Fragment {
      * 用于在main中实例化SelfTaskFragment
      * @return
      */
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
+
     public static SelfTaskFragment newInstance(){
         return new SelfTaskFragment();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-<<<<<<< HEAD
         view= inflater.inflate(R.layout.self_task_fragment, null);
+        gt_greetingText =  view.findViewById(R.id.gt_self_task_fragment);
+        setUpGreetingText();
         init_recyclerview();
         init_reflashview();
+
         return view;
     }
 
     private void init_reflashview() {
-        handler = new Handler() {
-            @Override
-            public void publish(LogRecord logRecord) {
-
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public void close() throws SecurityException {
-
-            }
-        };
         refresh = view.findViewById(R.id.reflash);
         refresh.setRefreshHeader(new WaveSwipeHeader(getActivity()));//WaveSwipeHeader
 
@@ -152,7 +129,7 @@ public class SelfTaskFragment extends Fragment {
                 final Button  checkbox = holder.getView(R.id.item_checkbox);
                 final ImageView done = holder.getView(R.id.item_state);
                 ImageView star ;
-                for (int i=Integer.parseInt(task.task_mark);i<5;++i){
+                for (int i=task.task_mark;i<5;++i){
                     star=holder.getView(all_star[i]);
                     star.setVisibility(View.INVISIBLE);
                 }
@@ -192,14 +169,14 @@ public class SelfTaskFragment extends Fragment {
         });
         Task test = new Task();
         test.task_name="内部测试";
-        test.task_mark="4";
+        test.task_mark=4;
         datalist.add(test);
-        test.task_mark="3";
+        test.task_mark=3;
         datalist.add(test);
-        test.task_mark="2";
+        test.task_mark=2;
         datalist.add(test);
         for(int i=0;i<5;++i){
-            test.task_mark="5";
+            test.task_mark=5;
             datalist.add(test);
             datalist.add(test);
             datalist.add(test);
@@ -207,14 +184,7 @@ public class SelfTaskFragment extends Fragment {
         self_task_rv.setAdapter(commonAdapter);
         self_task_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         commonAdapter.notifyDataSetChanged();
-=======
-        View view = inflater.inflate(R.layout.self_task_fragment, null);
 
-        gt_greetingText = (GreetingText) view.findViewById(R.id.gt_self_task_fragment);
-        setUpGreetingText();
-
-        return view;
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
     }
 
     @Override
