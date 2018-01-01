@@ -7,10 +7,26 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/self_choose"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:text="已完成的"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="13sp"
+            android:background="#fff"
+            />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/self_choose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -26,7 +42,7 @@
 
                 <android.support.v7.widget.RecyclerView
 
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/self_task_recyclerview"
@@ -45,8 +61,66 @@
             <!--android:layout_alignParentLeft="true"-->
             <!--android:layout_below="@id/reflash"-->
             <!--/>-->
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/self_choose"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:id="@+id/window"
+            android:background="#ffffff"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ddd"
+                />
+            <TextView
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已完成的"
+                android:paddingStart="20dp"
+                android:id="@+id/choose1"
+                android:textSize="12sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ddd"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/choose2"
+                android:text="未完成的"
+                android:paddingStart="20dp"
+                android:textSize="12sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#eee"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/choose3"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textSize="12sp"
+                android:text="全部任务"
+                android:paddingStart="20dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#eee"
+                />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

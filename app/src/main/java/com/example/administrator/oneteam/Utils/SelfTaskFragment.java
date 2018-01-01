@@ -1,6 +1,7 @@
 package com.example.administrator.oneteam.Utils;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +63,8 @@ public class SelfTaskFragment extends Fragment {
     private int [] all_star = new int[]{R.id.item_star1,R.id.item_star2,R.id.item_star3,R.id.item_star4,R.id.item_star5};
     private static final int UPDATE_GREETING_TEXT = 1;
     private GreetingText gt_greetingText;
-
+    private LinearLayout window;
+    private TextView choose,choose1,choose2,choose3;
 
     @SuppressLint("HandlerLeak")
     //region 线程处理函数 Handler
@@ -92,12 +95,44 @@ public class SelfTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.self_task_fragment, null);
-        gt_greetingText =  view.findViewById(R.id.gt_self_task_fragment);
-        setUpGreetingText();
+//        gt_greetingText =  view.findViewById(R.id.gt_self_task_fragment);
+//        setUpGreetingText();
         init_recyclerview();
         init_reflashview();
+        init_window();
 
         return view;
+    }
+
+    private void init_window() {
+        choose =view.findViewById(R.id.self_choose);
+        choose1 = view.findViewById(R.id.choose1);
+        choose2 = view.findViewById(R.id.choose2);
+        choose3 = view.findViewById(R.id.choose3);
+        window = view.findViewById(R.id.window);
+        choose.setTag(0);
+        choose.setTextColor(Color.parseColor("#3060f0"));
+        window.setVisibility(View.INVISIBLE);
+
+        choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(choose.getTag().equals(1)){
+                    window.setVisibility(View.INVISIBLE);
+                    choose.setTag(0);
+                    choose.setTextColor(Color.parseColor("#000000"));
+                }
+                else{
+                    choose.setTag(1);
+                    window.setVisibility(View.VISIBLE);
+                    choose.setTextColor(Color.parseColor("#3060f0"));
+                }
+
+
+            }
+        });
+
+
     }
 
     private void init_reflashview() {
