@@ -5,15 +5,15 @@ package com.example.administrator.oneteam.model;
  */
 
 public class Task {
-    public String task_id;
+    public int task_id;
     public String task_name;
-    public String max_person;
+    public int max_person;
     public String task_description;
-    public String task_mark;
-    public String newstime;
+    public int task_mark;
+    public String task_newstime;
     public String task_state;
-    public String task_budget;
+    public int task_budget;
     public String task_deadline;
-    public String task_presenter;
-    public String task_expenditure;
+    public int task_presenter_id;
+    public int task_expenditure;
 }

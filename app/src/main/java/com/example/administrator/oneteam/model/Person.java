@@ -7,9 +7,9 @@ package com.example.administrator.oneteam.model;
 public class Person {
     public String name;
     public String sex;
-    public String id;
+    public int person_id;
     public String description;
-    public String age;
+    public int age;
     public String email;
     public String position;
     public String join_in_time;
