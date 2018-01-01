@@ -70,7 +70,7 @@ public class SelfTaskFragment extends Fragment {
         super.onDestroyView();
     }
 
-    
+
     /**
      * 子线程更新GreetingText
      * 回调函数是Handler
