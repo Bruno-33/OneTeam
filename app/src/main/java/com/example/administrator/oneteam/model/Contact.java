@@ -10,6 +10,10 @@ public class Contact {
     private String phonebookLabel;
     private String pinyinName;
 
+
+
+    private String phoneNumber;
+
     public String getPhonebookLabel() {
         return phonebookLabel;
     }
@@ -32,6 +36,14 @@ public class Contact {
 
     public void setPinyinName(String pinyinName) {
         this.pinyinName = pinyinName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

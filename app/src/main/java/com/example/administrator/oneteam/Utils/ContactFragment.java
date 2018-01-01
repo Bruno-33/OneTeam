@@ -89,11 +89,9 @@ public class ContactFragment extends Fragment {
         lv_contact = (ListView) view.findViewById(R.id.lv_contact);
         qib = (QuickIndexBar) view.findViewById(R.id.qib);
         tv_center = (TextView) view.findViewById(R.id.tv_center);
-//        et_search = (EditText) findViewById(R.id.et_search);
         tv_no_contact = (TextView) view.findViewById(R.id.tv_no_contact);
         getContactArray();
         adapter = new ContactAdapter(this.getContext(), R.layout.contact_item, list, mIndexer);
-//        searchAdapter = new SearchContactAdapter(this, R.layout.list_item, filterList);
         lv_contact.setAdapter(adapter);
         qib.setOnIndexChangeListener(new QuickIndexBar.OnIndexChangeListener() {
             @Override
@@ -114,17 +112,22 @@ public class ContactFragment extends Fragment {
 
     private List<Contact> getContactArray() {
         Cursor cursor = getActivity().getContentResolver().query(URI,
-                new String[] { "display_name", "sort_key", "phonebook_label" },
+                new String[] { "display_name", "sort_key", "phonebook_label", ContactsContract.CommonDataKinds.Phone.NUMBER},
                 null, null, "phonebook_label");
         Contact contact;
         if (cursor.moveToFirst()) {
             do {
                 contact = new Contact();
+
                 String contact_name = cursor.getString(0);
                 String phonebook_label = cursor.getString(2);
+                String phone_number = cursor.getString(3);
+
                 contact.setPhonebookLabel(getPhonebookLabel(phonebook_label));
                 contact.setPinyinName(PinYin.getPinYin(contact_name));
                 contact.setName(contact_name);
+                contact.setPhoneNumber(phone_number);
+
                 list.add(contact);
             } while (cursor.moveToNext());
         }

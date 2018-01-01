@@ -47,9 +47,10 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             tv_index.setVisibility(View.GONE);
         }
 
-        TextView tv_contact_name = (TextView) convertView
-                .findViewById(R.id.tv_contact_name);
+        TextView tv_contact_name = (TextView) convertView.findViewById(R.id.tv_contact_name);
+        TextView tv_contact_phone_number = (TextView) convertView.findViewById(R.id.tv_contact_phone_number);
         tv_contact_name.setText(contact.getName());
+        tv_contact_phone_number.setText(contact.getPhoneNumber());
         return convertView;
     }
 

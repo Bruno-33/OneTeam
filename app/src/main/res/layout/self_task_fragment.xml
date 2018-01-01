@@ -8,12 +8,17 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< HEAD
         android:layout_marginTop="0dp"
         android:id="@+id/reflash"
         app:srlDisableContentWhenLoading="true"
         app:srlDisableContentWhenRefresh="true"
         xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.example.administrator.oneteam.tools.GreetingText
+            android:id="@+id/gt_self_task_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -62,15 +67,5 @@
         </LinearLayout>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-=======
-        android:paddingTop="60dp">
-
-        <com.example.administrator.oneteam.tools.GreetingText
-            android:id="@+id/gt_self_task_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </android.support.constraint.ConstraintLayout>
->>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
 
 </LinearLayout>

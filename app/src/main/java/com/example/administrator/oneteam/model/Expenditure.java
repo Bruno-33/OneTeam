@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by Administrator on 2018/1/1 0001.
  */
 
-public class expenditure {
+public class Expenditure {
     public int expenditure_id;
     public int person_id;
     public int task_id;
