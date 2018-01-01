@@ -63,12 +63,12 @@
             <!--/>-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/self_choose"
             android:layout_alignParentStart="true"
             android:orientation="vertical"
             android:id="@+id/window"
-            android:background="#ffffff"
+            android:background="#cccccccc"
             >
             <View
                 android:layout_width="match_parent"
@@ -84,6 +84,7 @@
                 android:paddingStart="20dp"
                 android:id="@+id/choose1"
                 android:textSize="12sp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"
@@ -99,6 +100,7 @@
                 android:text="未完成的"
                 android:paddingStart="20dp"
                 android:textSize="12sp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"
@@ -114,6 +116,7 @@
                 android:textSize="12sp"
                 android:text="全部任务"
                 android:paddingStart="20dp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"

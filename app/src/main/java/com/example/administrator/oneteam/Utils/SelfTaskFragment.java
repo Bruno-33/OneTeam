@@ -131,6 +131,15 @@ public class SelfTaskFragment extends Fragment {
 
             }
         });
+        window.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                window.setVisibility(View.INVISIBLE);
+                choose.setTag(0);
+                choose.setTextColor(Color.parseColor("#000000"));
+
+            }
+        });
 
 
     }
