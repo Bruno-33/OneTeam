@@ -105,12 +105,15 @@ public class SelfTaskFragment extends Fragment {
     }
 
     private void init_window() {
-        choose =view.findViewById(R.id.self_choose);
+
+        choose =  view.findViewById(R.id.self_choose);
         choose1 = view.findViewById(R.id.choose1);
         choose2 = view.findViewById(R.id.choose2);
         choose3 = view.findViewById(R.id.choose3);
-        window = view.findViewById(R.id.window);
+        window =  view.findViewById(R.id.window);
+
         choose.setTag(0);
+
         choose.setTextColor(Color.parseColor("#3060f0"));
         window.setVisibility(View.INVISIBLE);
 
