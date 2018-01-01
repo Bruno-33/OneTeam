@@ -1,8 +1,14 @@
 package com.example.administrator.oneteam.Utils;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.graphics.Paint;
+=======
+import android.annotation.SuppressLint;
+>>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.oneteam.R;
+<<<<<<< HEAD
 import com.example.administrator.oneteam.model.Task;
 import com.example.administrator.oneteam.tools.CommonAdapter;
 import com.example.administrator.oneteam.tools.ViewHolder;
@@ -41,6 +48,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
+=======
+import com.example.administrator.oneteam.tools.GreetingText;
+>>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
 
 /**
  * Created by D105-01 on 2017/12/24.
@@ -48,6 +58,7 @@ import java.util.logging.LogRecord;
 
 public class SelfTaskFragment extends Fragment {
 
+<<<<<<< HEAD
     private RecyclerView self_task_rv;
     private View view;
     private CommonAdapter<Task> commonAdapter;
@@ -55,12 +66,41 @@ public class SelfTaskFragment extends Fragment {
     private SmartRefreshLayout refresh;
     private Handler handler;
     private int [] all_star = new int[]{R.id.item_star1,R.id.item_star2,R.id.item_star3,R.id.item_star4,R.id.item_star5};
+=======
+    private static final int UPDATE_GREETING_TEXT = 1;
+
+    private GreetingText gt_greetingText;
+
+
+    @SuppressLint("HandlerLeak")
+    //region 线程处理函数 Handler
+    final Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case UPDATE_GREETING_TEXT:
+                    gt_greetingText.update();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    //endregion
+
+    /**
+     * 用于在main中实例化SelfTaskFragment
+     * @return
+     */
+>>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
     public static SelfTaskFragment newInstance(){
         return new SelfTaskFragment();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<<<<<<< HEAD
         view= inflater.inflate(R.layout.self_task_fragment, null);
         init_recyclerview();
         init_reflashview();
@@ -167,6 +207,14 @@ public class SelfTaskFragment extends Fragment {
         self_task_rv.setAdapter(commonAdapter);
         self_task_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         commonAdapter.notifyDataSetChanged();
+=======
+        View view = inflater.inflate(R.layout.self_task_fragment, null);
+
+        gt_greetingText = (GreetingText) view.findViewById(R.id.gt_self_task_fragment);
+        setUpGreetingText();
+
+        return view;
+>>>>>>> efcc32536114c1da040c7a8ccc9cea949b4bbdf1
     }
 
     @Override
@@ -177,5 +225,24 @@ public class SelfTaskFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    
+    /**
+     * 子线程更新GreetingText
+     * 回调函数是Handler
+     */
+    private void setUpGreetingText(){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = UPDATE_GREETING_TEXT;
+                handler.sendMessage(msg);
+                //每隔十分钟执行一次GreetingText的更新
+                handler.postDelayed(this, 1000*60*10);
+            }
+        };
+        runnable.run();
     }
 }
