@@ -72,11 +72,11 @@ android:orientation="vertical">
         android:background="#cccccccc"
         >
         <com.example.administrator.oneteam.tools.OneTeamCalendar
+            android:id="@+id/one_team_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:id="@+id/self_calender"
             />
         <View
             android:layout_width="match_parent"

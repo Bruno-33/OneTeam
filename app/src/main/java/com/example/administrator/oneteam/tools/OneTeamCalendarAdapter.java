@@ -4,11 +4,14 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.oneteam.R;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import java.util.List;
  * Created by D105-01 on 2017/12/24.
  */
 
-public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendarAdapter.ViewHolder>{
+public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendarAdapter.ViewHolder>  {
 
     private static final String TAG = "OneTeamCalendarAdapter";
 
@@ -32,10 +35,18 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
     private Date latestDate = calendar.getTime();
     private Date calendarTime = calendar.getTime();
 
+
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private SimpleDateFormat getDate = new SimpleDateFormat("dd");
     private List<Date> dates = new ArrayList<>();
 
+    private Date selectedDate = calendar.getTime();
+    private TextView selectedDateView = null;
+
+    public interface OnDateClickListener{
+        void onClick(View textView);
+    };
+    private OnDateClickListener dateClickListener;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -52,7 +63,7 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
 
         List<TextView> tv_lists = new ArrayList<>();
 
-        public ViewHolder(View view){
+        private ViewHolder(View view){
 
             super(view);
 
@@ -79,8 +90,11 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
 //            mWeeks.add(week);
 //        }
 
+
+        //获得当前的日期
         dates.add(calendarTime);
 
+        //获得前十天的日期
         for (int i = 0; i < 10; i++){
             calendar.add(Calendar.DATE, -1);
             Date date = calendar.getTime();
@@ -90,6 +104,8 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
         earlyDate = calendar.getTime();
         calendar.add(Calendar.DATE, 10);
 
+
+        //获得后十天的日期
         for(int i = 0; i < 10; i++){
             calendar.add(Calendar.DATE, 1);
             Date date = calendar.getTime();
@@ -99,6 +115,7 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
         latestDate = calendar.getTime();
         calendar.add(Calendar.DATE, -10);
 
+        //将dates转化为Weeks
         for (int i = 0; i < 3; i++){
             List<Date> week = new ArrayList<>();
             week.addAll(dates.subList(7 * i,  7 * i + 7));
@@ -113,12 +130,12 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder: " + position);
         List<Date> week = mWeeks.get(position);
 
         for(int i = 0; i < holder.tv_lists.size(); i++){
-            holder.tv_lists.get(i).setText(getDate.format(week.get(i)));
+            holder.tv_lists.get(i).setText(sdf.format(week.get(i)));
             if (calendar.getTime().compareTo(week.get(i)) == 0){
                 holder.tv_lists.get(i).setBackgroundResource(R.drawable.cur_date);
                 holder.tv_lists.get(i).setTextColor(Color.rgb(255,255,255));
@@ -126,7 +143,43 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
             if (calendar.getTime().compareTo(week.get(i)) > 0){
                 holder.tv_lists.get(i).setTextColor(Color.rgb(180,180,180));
             }
+
+            if (dateClickListener != null){
+                holder.tv_lists.get(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        //上一次选择的日期
+                        if (selectedDateView != null){
+                            if (calendar.getTime().compareTo(selectedDate) == 0){
+                                selectedDateView.setTextColor(Color.rgb(255,255,255));
+                            }
+                            else if (calendar.getTime().compareTo(selectedDate) > 0){
+                                selectedDateView.setTextColor(Color.rgb(180, 180, 180));
+                            }
+                            else {
+                                selectedDateView.setTextColor(Color.rgb(0, 0, 0));
+                            }
+                        }
+                        //更新选择日期
+                        selectedDate = mWeeks.get(position).get(Math.round(v.getX()/ v.getWidth()));
+                        selectedDateView = (TextView) v;
+                        selectedDateView.setTextColor(Color.parseColor("#00A4EF"));
+
+                        dateClickListener.onClick(v);
+                    }
+                });
+            }
+
+
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         if(position == 0){
             calendar.setTime(earlyDate);
@@ -157,13 +210,21 @@ public class OneTeamCalendarAdapter extends RecyclerView.Adapter<OneTeamCalendar
             //notifyDataSetChanged();
             calendar.setTime(currentDate);
         }
-
-
-
     }
 
     @Override
     public int getItemCount() {
         return mWeeks.size();
     }
+
+
+
+    public void setOnDateClickListener(OnDateClickListener dateClickListener){
+        this.dateClickListener = dateClickListener;
+    }
+
+    public Date getSelectedDate(){
+        return selectedDate;
+    }
+
 }

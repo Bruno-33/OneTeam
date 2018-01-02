@@ -109,12 +109,15 @@ public class SelfTaskFragment extends Fragment {
     private void init_window() {
         self_calender = view.findViewById(R.id.self_calender);
         choose =view.findViewById(R.id.self_choose);
+
         choose1 = view.findViewById(R.id.choose1);
         choose2 = view.findViewById(R.id.choose2);
         choose3 = view.findViewById(R.id.choose3);
-        window = view.findViewById(R.id.window);
+        window =  view.findViewById(R.id.window);
+
         choose.setTag(0);
         choose.setTextColor(Color.parseColor("#000000"));
+
         window.setVisibility(View.INVISIBLE);
         self_calender.setVisibility(View.GONE);
         choose.setOnClickListener(new View.OnClickListener() {

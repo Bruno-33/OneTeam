@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.example.administrator.oneteam.R;
 
+import java.util.Date;
+
 /**
  * Created by D105-01 on 2017/12/24.
  */
@@ -39,5 +41,12 @@ public class OneTeamCalendar extends LinearLayout {
 
     }
 
+    public void setDateClickListener(OneTeamCalendarAdapter.OnDateClickListener onDateClickListener){
+        calendarAdapter.setOnDateClickListener(onDateClickListener);
+    }
+
+    public Date getSelectedDate(){
+        return calendarAdapter.getSelectedDate();
+    }
 
 }

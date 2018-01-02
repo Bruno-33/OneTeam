@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="#EEE">
+        android:background="#FFF">
 
         <TextView
             android:id="@+id/sun_calendar_item"
@@ -20,8 +20,10 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="0"
+            android:singleLine="true"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/mon_calendar_item"
@@ -30,8 +32,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="1"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tue_calendar_item"
@@ -40,8 +43,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="2"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/wed_calendar_item"
@@ -50,8 +54,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="3"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/thu_calendar_item"
@@ -60,8 +65,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="4"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/fri_calendar_item"
@@ -70,8 +76,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="5"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/sat_calendar_item"
@@ -80,7 +87,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="6"
+            android:maxLength="2"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
     </TableRow>
 </android.support.constraint.ConstraintLayout>

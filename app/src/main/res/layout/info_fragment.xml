@@ -1,152 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.constraint.ConstraintLayout
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:background="#fff"
+    >
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/bg_info"
-            android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/bg" />
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+       >
         <TextView
-            android:id="@+id/name_text_info"
-            android:layout_width="78dp"
-            android:layout_height="37dp"
-            android:layout_marginBottom="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:gravity="center"
-            android:text="OneTeam"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/bg_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/sign_in_info"
+            android:id="@+id/toolbar_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_text_info"
-            app:srcCompat="@mipmap/sign_in"/>
-
-
-        <ImageView
-            android:id="@+id/phone_icon_info"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bg_info"
-            app:srcCompat="@mipmap/phone_filled"/>
-
-
+            android:text="1月"
+            android:textColor="#44afcc"
+            android:textSize="22sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            />
         <TextView
-            android:id="@+id/phone_text_info"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center_vertical"
-            android:text="123456789"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/phone_icon_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/phone_icon_info"
-            app:layout_constraintTop_toTopOf="@+id/phone_icon_info" />
+            android:id="@+id/toolbar_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/toolbar_month"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:text="2018年"
+            android:textColor="#44afcc"
+            android:layout_alignBottom="@+id/toolbar_month"
+            />
+        <Button
+            android:id="@+id/jump_today"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:text="今天"
+            android:textColor="#44afcc"
+            android:background="@drawable/shape"
+            android:layout_alignBottom="@+id/toolbar_month"
+            android:layout_marginRight="20dp"
+            />
 
-        <ImageView
-            android:id="@+id/mail_icon_info"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone_icon_info" />
-            <!--app:srcCompat="@mipmap/mail"-->
-
-
-        <TextView
-            android:id="@+id/mail_text_info"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center_vertical"
-            android:text="12312312@qq.com"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/mail_icon_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mail_icon_info"
-            app:layout_constraintTop_toTopOf="@+id/mail_icon_info" />
-
-        <ImageView
-            android:id="@+id/position_icon_info"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mail_icon_info"
-            app:srcCompat="@mipmap/position" />
-
-        <TextView
-            android:id="@+id/position_text_info"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center_vertical"
-            android:text="大队长"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/position_icon_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/position_icon_info"
-            app:layout_constraintTop_toTopOf="@+id/position_icon_info" />
-
-        <ImageView
-            android:id="@+id/eb_icon_info"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/position_icon_info" />
-            <!--app:srcCompat="@mipmap/eb" -->
+    </RelativeLayout>
 
 
-        <TextView
-            android:id="@+id/eb_text_info"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center_vertical"
-            android:text="本科"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/eb_icon_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/eb_icon_info"
-            app:layout_constraintTop_toTopOf="@+id/eb_icon_info" />
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:layout_weight="3"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:background="#fff"
+        />
 
-    </android.support.constraint.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#1E000000"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/calendarView"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
+        ><!--android:textAlignment="Left"-->
+        <Button
+            android:id="@+id/start"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:background="@drawable/shape1"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:text="打卡"
+            android:textColor="#44afcc"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="24dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:layout_editor_absoluteX="76dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="本月时长"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="本周时长"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="本日时长"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            tools:layout_editor_absoluteX="76dp">
+            <TextView
+                android:id="@+id/month_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="100分钟"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/week_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11分钟"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/day_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0分钟"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="#000"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
