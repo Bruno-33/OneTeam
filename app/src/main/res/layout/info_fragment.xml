@@ -18,8 +18,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"        />
-            <!--app:srcCompat="@mipmap/bg" />-->
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/bg" />
 
         <TextView
             android:id="@+id/name_text_info"
@@ -44,8 +44,8 @@
             android:layout_marginTop="8dp"
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_text_info"/>
-            <!--app:srcCompat="@mipmap/sign_in" -->
+            app:layout_constraintTop_toBottomOf="@+id/name_text_info"
+            app:srcCompat="@mipmap/sign_in"/>
 
 
         <ImageView
@@ -55,8 +55,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bg_info"/>
-            <!--app:srcCompat="@mipmap/phone_filled"-->
+            app:layout_constraintTop_toBottomOf="@+id/bg_info"
+            app:srcCompat="@mipmap/phone_filled"/>
 
 
         <TextView
