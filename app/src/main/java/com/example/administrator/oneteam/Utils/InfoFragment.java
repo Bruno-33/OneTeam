@@ -110,9 +110,6 @@ public class InfoFragment extends Fragment  {
                 day_date.setText(getSelectedDatesString());
             }
         };
-        widget.setTileWidth(LinearLayout.LayoutParams.MATCH_PARENT);//因为在layout设置其match_parent，他会保持原来的宽长比缩小，所以可以再次设置
-
-
         context = getActivity();
         Calendar_Init();
         Listener_Init();
@@ -145,8 +142,8 @@ public class InfoFragment extends Fragment  {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public  void Calendar_Init(){
-        widget.setTileWidth(LinearLayout.LayoutParams.MATCH_PARENT);//因为在layout设置其match_parent，他会保持原来的宽长比缩小，所以可以再次设置
-        //widget.setTopbarVisible(false);//设置头不可见
+          widget.setTileWidth(LinearLayout.LayoutParams.MATCH_PARENT);//因为在layout设置其match_parent，他会保持原来的宽长比缩小，所以可以再次设置
+        widget.setTopbarVisible(false);//设置头不可见
         //设置点击选择日期改变事件
         widget.setOnDateChangedListener(onDateSelectedListener);
         widget.setShowOtherDates(MaterialCalendarView.SHOW_ALL);//SHOW_ALL = SHOW_OTHER_MONTHS | SHOW_OUT_OF_RANGE | SHOW_DECORATED_DISABLED;
