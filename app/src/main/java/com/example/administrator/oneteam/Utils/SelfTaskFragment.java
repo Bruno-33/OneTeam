@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.example.administrator.oneteam.R;
 import com.example.administrator.oneteam.model.Task;
 import com.example.administrator.oneteam.tools.CommonAdapter;
+import com.example.administrator.oneteam.tools.OneTeamCalendar;
 import com.example.administrator.oneteam.tools.ViewHolder;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.FunGameBattleCityHeader;
@@ -65,7 +67,8 @@ public class SelfTaskFragment extends Fragment {
     private GreetingText gt_greetingText;
     private LinearLayout window;
     private TextView choose,choose1,choose2,choose3;
-
+    private String colorbule = "#3060f0";
+    private OneTeamCalendar self_calender;
     @SuppressLint("HandlerLeak")
     //region 线程处理函数 Handler
     final Handler handler = new Handler(){
@@ -100,23 +103,23 @@ public class SelfTaskFragment extends Fragment {
         init_recyclerview();
         init_reflashview();
         init_window();
-
         return view;
     }
 
     private void init_window() {
+        self_calender = view.findViewById(R.id.self_calender);
+        choose =view.findViewById(R.id.self_choose);
 
-        choose =  view.findViewById(R.id.self_choose);
         choose1 = view.findViewById(R.id.choose1);
         choose2 = view.findViewById(R.id.choose2);
         choose3 = view.findViewById(R.id.choose3);
         window =  view.findViewById(R.id.window);
 
         choose.setTag(0);
+        choose.setTextColor(Color.parseColor("#000000"));
 
-        choose.setTextColor(Color.parseColor("#3060f0"));
         window.setVisibility(View.INVISIBLE);
-
+        self_calender.setVisibility(View.GONE);
         choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,18 +127,64 @@ public class SelfTaskFragment extends Fragment {
                     window.setVisibility(View.INVISIBLE);
                     choose.setTag(0);
                     choose.setTextColor(Color.parseColor("#000000"));
+                    self_calender.setVisibility(View.GONE);
                 }
                 else{
                     choose.setTag(1);
                     window.setVisibility(View.VISIBLE);
-                    choose.setTextColor(Color.parseColor("#3060f0"));
+                    choose.setTextColor(Color.parseColor(colorbule));
+                    self_calender.setVisibility(View.VISIBLE);
                 }
-
-
             }
         });
-
-
+        window.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                self_calender.setVisibility(View.GONE);
+                window.setVisibility(View.INVISIBLE);
+                choose.setTag(0);
+                choose.setTextColor(Color.parseColor("#000000"));
+            }
+        });
+        choose1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                self_calender.setVisibility(View.GONE);
+                window.setVisibility(View.INVISIBLE);
+                choose1.setTextColor(Color.parseColor(colorbule));
+                choose.setText(choose1.getText().toString());
+                choose2.setTextColor(Color.parseColor("#000000"));
+                choose3.setTextColor(Color.parseColor("#000000"));
+                choose.setTag(0);
+                choose.setTextColor(Color.parseColor("#000000"));
+            }
+        });
+        choose2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                self_calender.setVisibility(View.GONE);
+                window.setVisibility(View.INVISIBLE);
+                choose2.setTextColor(Color.parseColor(colorbule));
+                choose.setText(choose2.getText().toString());
+                choose1.setTextColor(Color.parseColor("#000000"));
+                choose3.setTextColor(Color.parseColor("#000000"));
+                choose.setTag(0);
+                choose.setTextColor(Color.parseColor("#000000"));
+            }
+        });
+        choose3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                self_calender.setVisibility(View.GONE);
+                window.setVisibility(View.INVISIBLE);
+                choose3.setTextColor(Color.parseColor(colorbule));
+                choose.setText(choose3.getText().toString());
+                choose1.setTextColor(Color.parseColor("#000000"));
+                choose2.setTextColor(Color.parseColor("#000000"));
+                choose.setTag(0);
+                choose.setTextColor(Color.parseColor("#000000"));
+            }
+        });
     }
 
     private void init_reflashview() {
@@ -154,10 +203,14 @@ public class SelfTaskFragment extends Fragment {
                 refresh.finishLoadmore(1000);
             }
         });
+
     }
 
     private void init_recyclerview() {
         self_task_rv = view.findViewById(R.id.self_task_recyclerview);
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setChangeDuration(4000);
+        self_task_rv.setItemAnimator(animator);
         datalist = new ArrayList<>();
         commonAdapter = new CommonAdapter<Task>(getActivity(),R.layout.task_recyclerview_item,datalist) {
             @Override

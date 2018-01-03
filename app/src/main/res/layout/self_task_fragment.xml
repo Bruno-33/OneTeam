@@ -5,9 +5,10 @@
     android:paddingTop="50dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
         <TextView
             android:layout_width="match_parent"
@@ -23,7 +24,6 @@
             android:textSize="13sp"
             android:background="#fff"
             />
-
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_alignParentLeft="true"
             android:layout_below="@id/self_choose"
@@ -63,13 +63,20 @@
             <!--/>-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/self_choose"
             android:layout_alignParentStart="true"
             android:orientation="vertical"
             android:id="@+id/window"
-            android:background="#ffffff"
+            android:background="#cccccccc"
             >
+            <com.example.administrator.oneteam.tools.OneTeamCalendar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/self_calender"
+                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -84,6 +91,7 @@
                 android:paddingStart="20dp"
                 android:id="@+id/choose1"
                 android:textSize="12sp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"
@@ -99,6 +107,7 @@
                 android:text="未完成的"
                 android:paddingStart="20dp"
                 android:textSize="12sp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"
@@ -114,6 +123,7 @@
                 android:textSize="12sp"
                 android:text="全部任务"
                 android:paddingStart="20dp"
+                android:background="#ffffff"
                 />
             <View
                 android:layout_width="match_parent"

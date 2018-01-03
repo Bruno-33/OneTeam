@@ -6,7 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.net.sip.SipAudioCall;
 import android.os.AsyncTask;
 import android.os.Build;
