@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/vincent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_name"
+        android:layout_gravity="center_vertical"
+        android:text="3333"
+        app:layout_constraintBottom_toBottomOf="@id/user_image"
+        app:layout_constraintTop_toTopOf="@id/user_image"
+        app:layout_constraintStart_toEndOf="@id/user_image"
+        android:layout_marginStart="10dp"
+        android:textColor="#000"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已完成"
+        android:id="@+id/user_task_state"
+        app:layout_constraintTop_toTopOf="@id/user_image"
+        app:layout_constraintBottom_toBottomOf="@id/user_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="23dp"
+        android:textColor="#000"
+         />
+
+</android.support.constraint.ConstraintLayout>

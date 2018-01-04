@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.oneteam.Factory.ServiceFactory;
 import com.example.administrator.oneteam.Service.BrunoService;
 import com.example.administrator.oneteam.model.Outcome;
@@ -41,6 +42,8 @@ import java.net.URLConnection;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.example.administrator.oneteam.R.id.imageView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         init();
         bindListeners();
         stage = "signin";
+        Glide.with(this).load("http://172.18.92.176:3333/my.PNG").into(photo);
     }
 
     private void bindViews(){

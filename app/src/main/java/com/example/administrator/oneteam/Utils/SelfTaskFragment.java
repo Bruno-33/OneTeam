@@ -22,8 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.oneteam.LoginActivity;
+import com.example.administrator.oneteam.Main;
 import com.example.administrator.oneteam.R;
 import com.example.administrator.oneteam.model.Task;
+import com.example.administrator.oneteam.task_detail;
 import com.example.administrator.oneteam.tools.CommonAdapter;
 import com.example.administrator.oneteam.tools.OneTeamCalendar;
 import com.example.administrator.oneteam.tools.ViewHolder;
@@ -252,7 +255,8 @@ public class SelfTaskFragment extends Fragment {
         commonAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){
             @Override
             public void onClick(int position) {
-                Toast.makeText(getActivity(),"onCompleted()",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), task_detail.class);
+                startActivity(intent);
             }
             @Override
             public void onLongClick(int position) {
