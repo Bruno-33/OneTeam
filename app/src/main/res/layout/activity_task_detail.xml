@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="0dp"
-    android:paddingEnd="10dp"
-    android:paddingStart="10dp"
+    android:paddingEnd="0dp"
+    android:paddingStart="0dp"
     android:background="#FFFFFF"
     android:layout_marginTop="0dp">
     <ImageView
@@ -37,7 +37,7 @@
                 android:textColor="#15f"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="10dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:id="@+id/task_checkbox"
                 android:background="@drawable/check"
                 android:paddingEnd="20dp"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="10dp"
                 />
             <TextView
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="33dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             >
             <ImageView
                 android:layout_width="22dp"
@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             >
             <ImageView
                 android:layout_width="23dp"
@@ -222,15 +222,15 @@
         <View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_marginStart="38dp"
-            android:layout_height="1px"
+            android:layout_height="15px"
             android:background="#ddd"
             />
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
             android:id="@+id/person_layout"
             >
             <ImageView
@@ -297,25 +297,30 @@
                 app:layout_constraintBottom_toBottomOf="@id/task_down"
                 />
         </android.support.constraint.ConstraintLayout>
-        <View
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_marginStart="38dp"
-            android:layout_height="1px"
-            android:background="#ddd"
-            />
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/task_persons"
+            android:paddingStart="15dp"
             >
+
         </android.support.v7.widget.RecyclerView>
+        <View
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="1px"
+            android:background="#ddd"
+            android:layout_marginBottom="5dp"
+            />
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             android:id="@+id/budget_layout"
             >
             <ImageView
@@ -365,6 +370,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/task_budgets"
             android:visibility="gone"
+            android:paddingStart="15dp"
             />
     </LinearLayout>
 </RelativeLayout>

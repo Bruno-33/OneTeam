@@ -128,10 +128,10 @@ public class task_detail extends AppCompatActivity {
             public void onClick(int position) {
             }
             @Override
-            public void onLongClick(int position) {
+            public void onLongClick(int position){
             }
         });
-        Map<String,String> tmp ;
+        Map<String,String> tmp;
         tmp = new HashMap<>();
         tmp.put("name","33");
         tmp.put("url","my.PNG");

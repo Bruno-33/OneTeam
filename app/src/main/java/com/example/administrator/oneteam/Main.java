@@ -165,6 +165,11 @@ public class Main extends AppCompatActivity
             Toast.makeText(getApplication(),"功能尚未实现，敬请期待...",Toast.LENGTH_LONG).show();
             return true;
         }
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(this,add_task.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
