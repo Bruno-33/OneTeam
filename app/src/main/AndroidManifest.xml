@@ -42,7 +42,8 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".task_detail"></activity>
+        <activity android:name=".task_detail" />
+        <activity android:name=".person_detail"></activity>
     </application>
 
 </manifest>

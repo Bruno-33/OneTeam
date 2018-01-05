@@ -1,6 +1,7 @@
 package com.example.administrator.oneteam;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -174,6 +175,8 @@ public class Main extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
