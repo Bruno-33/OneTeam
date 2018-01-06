@@ -67,9 +67,7 @@ public class SelfTaskFragment extends Fragment {
     private RecyclerView self_task_rv,expense_rv;
     private View view;
     private CommonAdapter<Task> commonAdapter;
-    private CommonAdapter<Map<String,String>> commonAdapter1;
     private List<Task> datalist;
-    private List<Map<String,String>> datalist1;
     private SmartRefreshLayout refresh;
     private int [] all_star = new int[]{R.id.item_star1,R.id.item_star2,R.id.item_star3,R.id.item_star4,R.id.item_star5};
     private static final int UPDATE_GREETING_TEXT = 1;
@@ -216,112 +214,73 @@ public class SelfTaskFragment extends Fragment {
 
     private void init_recyclerview() {
         self_task_rv = view.findViewById(R.id.self_task_recyclerview);
-        expense_rv = view.findViewById(R.id.expense_recyclerview);
-        self_task_rv.setVisibility(View.GONE);
         datalist = new ArrayList<>();
-        datalist1 = new ArrayList<>();
-//
-//        commonAdapter = new CommonAdapter<Task>(getActivity(),R.layout.task_recyclerview_item,datalist) {
-//            @Override
-//            public void convert(ViewHolder holder, Task task) {
-//                final TextView title=holder.getView(R.id.item_title);
-//                final String font = title.getFontFeatureSettings();
-//                final Button  checkbox = holder.getView(R.id.item_checkbox);
-//                final ImageView done = holder.getView(R.id.item_state);
-//                ImageView star ;
-//                for (int i=task.task_mark;i<5;++i){
-//                    star=holder.getView(all_star[i]);
-//                    star.setVisibility(View.INVISIBLE);
-//                }
-//                checkbox.setTag(0);
-//                done.setImageResource(R.drawable.undone);
-//                checkbox.setBackgroundResource(R.drawable.uncheck);
-//                checkbox.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if(checkbox.getTag().equals(1)){
-//                            title.getPaint().setFlags(0);
-//                            title.setText(title.getText());
-//                            title.setFontFeatureSettings(font);
-//                            checkbox.setBackgroundResource(R.drawable.uncheck);
-//                            checkbox.setTag(0);
-//                            done.setImageResource(R.drawable.undone);
-//                        }else{
-//                            title.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//                            title.setText(title.getText());
-//                            checkbox.setTag(1);
-//                            checkbox.setBackgroundResource(R.drawable.check);
-//                            done.setImageResource(R.drawable.done);
-//                        }
-//                    }
-//                });
-//                title.setText(task.task_name);
-//            }
-//        };
-//        commonAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){
-//            @Override
-//            public void onClick(int position) {
-//                Intent intent = new Intent(getContext(), task_detail.class);
-//                startActivity(intent);
-//            }
-//            @Override
-//            public void onLongClick(int position) {
-//            }
-//        });
-//        Task test = new Task();
-//        test.task_name="内部测试";
-//        test.task_mark=4;
-//        datalist.add(test);
-//        test.task_mark=3;
-//        datalist.add(test);
-//        test.task_mark=2;
-//        datalist.add(test);
-//        for(int i=0;i<5;++i){
-//            test.task_mark=5;
-//            datalist.add(test);
-//            datalist.add(test);
-//            datalist.add(test);
-//        }
-//        self_task_rv.setAdapter(commonAdapter);
-//        self_task_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        commonAdapter.notifyDataSetChanged();
 
-        commonAdapter1 = new CommonAdapter<Map<String,String>>(getActivity(),R.layout.expense_recyclerview_item,datalist1) {
+        commonAdapter = new CommonAdapter<Task>(getActivity(),R.layout.task_recyclerview_item,datalist) {
             @Override
-            public void convert(ViewHolder holder, Map<String,String> task) {
-                final TextView title=holder.getView(R.id.rv_name);
-                final TextView expense = holder.getView(R.id.rv_expense);
-                final ImageView done = holder.getView(R.id.rv_image);
-                title.setText(task.get("name"));
-                expense.setText(task.get("expense"));
-                Glide.with(getActivity()).load("http://172.18.92.176:3333/"+task.get("url")).into(done);
+            public void convert(ViewHolder holder, Task task) {
+                final TextView title=holder.getView(R.id.item_title);
+                final String font = title.getFontFeatureSettings();
+                final Button  checkbox = holder.getView(R.id.item_checkbox);
+                final ImageView done = holder.getView(R.id.item_state);
+                ImageView star ;
+                for (int i=task.task_mark;i<5;++i){
+                    star=holder.getView(all_star[i]);
+                    star.setVisibility(View.INVISIBLE);
+                }
+                checkbox.setTag(0);
+                done.setImageResource(R.drawable.undone);
+                checkbox.setBackgroundResource(R.drawable.uncheck);
+                checkbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(checkbox.getTag().equals(1)){
+                            title.getPaint().setFlags(0);
+                            title.setText(title.getText());
+                            title.setFontFeatureSettings(font);
+                            checkbox.setBackgroundResource(R.drawable.uncheck);
+                            checkbox.setTag(0);
+                            done.setImageResource(R.drawable.undone);
+                        }else{
+                            title.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            title.setText(title.getText());
+                            checkbox.setTag(1);
+                            checkbox.setBackgroundResource(R.drawable.check);
+                            done.setImageResource(R.drawable.done);
+                        }
+                    }
+                });
+                title.setText(task.task_name);
             }
         };
-        commonAdapter1.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){
+        commonAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){
             @Override
             public void onClick(int position) {
-                Intent intent = new Intent(getContext(), expense_detail.class);
+                Intent intent = new Intent(getContext(), task_detail.class);
                 startActivity(intent);
             }
             @Override
             public void onLongClick(int position) {
             }
         });
-        Map<String,String> tmp = new HashMap<>();
-        tmp.put("name","test");
-        tmp.put("expense","33.33");
-        tmp.put("url","my.PNG");
-        datalist1.add(tmp);
+        Task test = new Task();
+        test.task_name="内部测试";
+        test.task_mark=4;
+        datalist.add(test);
+        test.task_mark=3;
+        datalist.add(test);
+        test.task_mark=2;
+        datalist.add(test);
         for(int i=0;i<5;++i){
-            tmp = new HashMap<>();
-            tmp.put("name","test");
-            tmp.put("expense","33.33"+String.valueOf(i));
-            tmp.put("url","my.PNG");
-            datalist1.add(tmp);
+            test.task_mark=5;
+            datalist.add(test);
+            datalist.add(test);
+            datalist.add(test);
         }
-        expense_rv.setAdapter(commonAdapter1);
-        expense_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        commonAdapter1.notifyDataSetChanged();
+        self_task_rv.setAdapter(commonAdapter);
+        self_task_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        commonAdapter.notifyDataSetChanged();
+
 
     }
 

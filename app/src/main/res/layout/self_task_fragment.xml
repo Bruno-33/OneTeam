@@ -69,14 +69,6 @@
                     android:id="@+id/self_task_recyclerview"
                     >
                 </android.support.v7.widget.RecyclerView>
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:id="@+id/expense_recyclerview"
-                    >
-                </android.support.v7.widget.RecyclerView>
-
             </LinearLayout>
 
 
