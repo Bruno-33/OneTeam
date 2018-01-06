@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class task_detail extends AppCompatActivity {
-    private TextView name,presenter,newsdate,persons,rate,budget_rate,ddl,back;
+    private TextView name,presenter,newsdate,persons,rate,budget_rate,ddl,back,add_task,add_expense;
     private ImageView check_box,down_person,down_budget;
     private RecyclerView person_rv,budget_rv;
     private ConstraintLayout person_layout,budget_layout;
@@ -71,6 +71,19 @@ public class task_detail extends AppCompatActivity {
                 }
             }
         });
+        add_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        add_expense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(),add_expense.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void init_view() {
@@ -89,6 +102,8 @@ public class task_detail extends AppCompatActivity {
         budget_layout = (ConstraintLayout)findViewById(R.id.budget_layout);
         down_person = (ImageView)findViewById(R.id.task_down);
         down_budget = (ImageView)findViewById(R.id.task_budget_down);
+        add_task = (TextView)findViewById(R.id.join_task);
+        add_expense = (TextView)findViewById(R.id.add_enpense);
         person_rv.setVisibility(View.GONE);
         budget_rv.setVisibility(View.GONE);
         datalist = new ArrayList<>();

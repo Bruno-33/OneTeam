@@ -231,6 +231,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/person_layout"
             >
             <ImageView
@@ -305,6 +306,15 @@
             >
 
         </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击此处即可加入该任务"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/join_task"
+            />
         <View
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"
@@ -372,5 +382,24 @@
             android:visibility="gone"
             android:paddingStart="15dp"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击此处即可申请报销"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/add_enpense"
+            />
+        <View
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="1px"
+            android:background="#ddd"
+            />
     </LinearLayout>
+
+
 </RelativeLayout>
