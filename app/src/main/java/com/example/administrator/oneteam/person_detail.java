@@ -1,29 +1,72 @@
 package com.example.administrator.oneteam;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.example.administrator.oneteam.R.id.imageView;
 
 public class person_detail extends AppCompatActivity {
     TextView name,sex,age,time,email,position,back;
     ImageView photo;
     ConstraintLayout p_lt,n_lt,e_lt,posi_lt,s_lt,j_lt,a_lt;
     AlertDialog.Builder alertDialog;
+    public static final int TAKE_PHOTO = 1;//启动相机标识
+    public static final int SELECT_PHOTO = 2;//启动相册标识
+    private File outputImagepath;//存储拍完照后的图片的路径
+    String Picture;
+    private Bitmap orc_bitmap;//拍照和相册获取图片的Bitmap
+    Context context;
+    private String   newImagePath;//新头像的url
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_detail);
+        //创建pict文件夹
+        Picture = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+        context = getApplicationContext();
+
         init_view();
         init_listener();
     }
 
+    final String[] way = new String[]{"拍摄","从相册选择"};
     private void init_listener() {
         n_lt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +82,19 @@ public class person_detail extends AppCompatActivity {
         });
         p_lt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(person_detail.this);
+                dialog.setTitle("").setItems(way,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which==0){
+                            xiangjiClick(view);
+                        }
+                        if(which==1){
+                            xiangceClick(view);
+                        }
+                    }
+                }).create().show();
                 //todo take or choose photo
             }
         });
@@ -97,4 +152,122 @@ public class person_detail extends AppCompatActivity {
         tmp.setText(view.getText().toString());
         alertDialog.show();
     }
+    /**
+     * 打开相机
+     */
+    public void xiangjiClick(View view) {
+        //checkSelfPermission 检测有没有 权限，PackageManager.PERMISSION_GRANTED 有权限，PackageManager.PERMISSION_DENIED  拒绝权限，一定要先判断权限,再打开相机,否则会报错
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(person_detail.this, new String[]{Manifest.permission.CAMERA}, 1);
+        }
+        else {
+            try {
+                take_photo();//已经授权了就调用打开相机的方法
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    /**
+     * 拍照获取图片
+     **/
+    public void take_photo() throws ClassNotFoundException {
+        // 激活相机
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // 判断存储卡是否可以用，可用进行存储
+        if ( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+            String filename = timeStampFormat.format(new Date());
+            outputImagepath = new File(Picture, filename + ".jpg");
+            //按时间命名
+            // 从文件中创建uri
+            Uri uri = Uri.fromFile(outputImagepath);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        }
+        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
+        startActivityForResult(intent, TAKE_PHOTO);
+    }
+    /**
+     * 打开相册
+     */
+    public void xiangceClick(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {/*打开相册*/
+            Intent intent = new Intent("android.intent.action.GET_CONTENT");
+            intent.setType("image/*");
+            startActivityForResult(intent, SELECT_PHOTO);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAKE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    /*这种方法是通过内存卡的路径进行读取图片，所以的到的图片是拍摄的原图*/
+                    displayImage(outputImagepath.getAbsolutePath());
+                    Log.i("tag", "拍照图片路径>>>>" + outputImagepath);
+                }
+                break;
+            case SELECT_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    handleImgeOnKitKat(data);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void handleImgeOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        Log.d("uri=intent.getData :", "" + uri);
+        if (DocumentsContract.isDocumentUri(this, uri)) {
+            String docId = DocumentsContract.getDocumentId(uri);        //数据表里指定的行
+            Log.d("getDocumentId(uri) :", "" + docId);
+            Log.d("uri.getAuthority() :", "" + uri.getAuthority());
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docId.split(":")[1];
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            imagePath = getImagePath(uri, null);
+        }
+        displayImage(imagePath);
+    }
+    /**
+     * 拍完照和从相册获取玩图片都要执行的方法(根据图片路径显示图片)
+     */
+    private void displayImage(String imagePath) {
+        if (!TextUtils.isEmpty(imagePath)) {
+            newImagePath = imagePath;
+            orc_bitmap = BitmapFactory.decodeFile(imagePath);//获取图片 // orc_bitmap = comp(BitmapFactory.decodeFile(imagePath)); //压缩图
+            photo.setImageBitmap(orc_bitmap);
+        } else {
+            Toast.makeText(this, "图片获取失败", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * 通过uri和selection来获取真实的图片路径,从相册获取图片时要用
+     */
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
 }

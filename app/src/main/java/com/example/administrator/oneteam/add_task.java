@@ -1,12 +1,19 @@
 package com.example.administrator.oneteam;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.icu.util.Calendar;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +21,7 @@ import android.widget.TextView;
 public class add_task extends AppCompatActivity {
     TextView description,name,max,ddl,budget,back,done;
     ImageView star1,star5,star2,star3,star4;
-    ConstraintLayout nn_lt,nmp_lt,nddl_lt,nb_lt;
+    ConstraintLayout nn_lt,nmp_lt,nddl_lt,nb_lt,nd_lt;
     AlertDialog.Builder alertDialog;
     ImageView [] all_star;
     int sum;
@@ -39,10 +46,26 @@ public class add_task extends AppCompatActivity {
                 init_alertdialog(max);
             }
         });
+        nd_lt.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                final Calendar tod = Calendar.getInstance();
+                Log.i("here","????");
+                new DatePickerDialog(add_task.this,DatePickerDialog.THEME_HOLO_LIGHT,new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                    }//onDateSet是点击了确定后的回调函数，year什么的就是选择的
+                },tod.get(Calendar.YEAR),tod.get(Calendar.MONTH),tod.get(Calendar.DAY_OF_MONTH)).show();//设置一开始是今天的日期
+
+            }
+        });
         nddl_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //todo show calendar
+
+                //todo show calendar
             }
         });
         nb_lt.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +122,7 @@ public class add_task extends AppCompatActivity {
         nn_lt = (ConstraintLayout)findViewById(R.id.nn_lt);
         nb_lt = (ConstraintLayout)findViewById(R.id.nb_lt);
         nddl_lt = (ConstraintLayout)findViewById(R.id.nddl_lt);
+        nd_lt = (ConstraintLayout)findViewById(R.id.nd_lt);
         nmp_lt = (ConstraintLayout)findViewById(R.id.nmp_lt);
         all_star=new ImageView[]{star1,star2,star3,star4,star5};
     }
