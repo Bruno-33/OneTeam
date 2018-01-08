@@ -1,26 +1,43 @@
 package com.example.administrator.oneteam;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.administrator.oneteam.Factory.ServiceFactory;
+import com.example.administrator.oneteam.Service.BrunoService;
+import com.example.administrator.oneteam.model.Outcome;
+
+import java.util.Calendar;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class add_expense extends AppCompatActivity {
     TextView description,name,money,time,back,done;
     ConstraintLayout en_lt,ee_lt,et_lt;
     AlertDialog.Builder alertDialog;
+    String input_ddl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        input_ddl="";
         init_view();
         init_listener();
+        name.setText("编码器的使用");
     }
 
     private void init_listener() {
@@ -38,7 +55,15 @@ public class add_expense extends AppCompatActivity {
         et_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo show calendar  time
+                final Calendar tod = Calendar.getInstance();
+                new DatePickerDialog(add_expense.this,DatePickerDialog.THEME_HOLO_LIGHT,new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        input_ddl=String.valueOf(year)+"-"+String.valueOf(month)+"-"+String.valueOf(dayOfMonth);
+                        input_ddl+=" 00:00:00";
+                        time.setText(input_ddl);
+                    }//onDateSet是点击了确定后的回调函数，year什么的就是选择的
+                },tod.get(Calendar.YEAR),tod.get(Calendar.MONTH),tod.get(Calendar.DAY_OF_MONTH)).show();//设置一开始是今天的日期
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +75,37 @@ public class add_expense extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo 加入远程数据库
-                finish();
+                if(is_null()){
+                    Toast.makeText(getApplication(),"部分信息没有输入，请完善后提交",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                            .create(BrunoService.class)
+                            .new_expense("48","1",money.getText().toString(),input_ddl,description.getText().toString())
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<Outcome>(){
+                                @Override
+                                public void onCompleted() {
+
+                                }
+                                @Override
+                                public void onError(Throwable e) {
+                                    Toast.makeText(add_expense.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                                @Override
+                                public void onNext(Outcome outcome) {
+                                    if(outcome.stage.equals("TRUE")){
+
+                                    }
+                                    else{
+
+                                    }
+                                }
+                            });
+                    finish();
+                }
+
             }
         });
     }
@@ -83,5 +137,11 @@ public class add_expense extends AppCompatActivity {
         tmp.setHint(view.getText().toString());
         tmp.setText("");
         alertDialog.show();
+    }
+    public boolean is_null() {
+        if(input_ddl.equals("")) return true;
+        else if(description.getText().toString().equals("")) return true;
+        else if(money.getText().toString().equals("")) return true;
+        return false;
     }
 }

@@ -33,6 +33,12 @@ public abstract interface BrunoService {
     @GET("/tasks")//获取用户 参数同getUsers接口
     public abstract Observable<List<Task>> getTasks(@Query("limit") int limit,@Query("offset") int offset);
 
+    @GET("/tasks_done")//获取用户 参数同getUsers接口
+    public abstract Observable<List<Task>> getTasks_done(@Query("limit") int limit,@Query("offset") int offset);
+
+    @GET("/tasks_undone")//获取用户 参数同getUsers接口
+    public abstract Observable<List<Task>> getTasks_undone(@Query("limit") int limit,@Query("offset") int offset);
+
     @GET("/task")//参数 task_id 和 person_id  返回某个任务被某个人领取的详情
     public abstract Observable<Task> getTaskDetail(@Query("task_id") String task_id,@Query("person_id") String person_id);
 
@@ -41,6 +47,29 @@ public abstract interface BrunoService {
 
     @GET("/set_time_sheet")//参数person_id 开始时间和总时间  成功返回“TRUE”
     public abstract Observable<Outcome> set_time_sheet(@Query("person_id") String person_id,@Query("start_time") String start_time,@Query("total_time") String total_time);
+
+    @GET("/new_task")
+    public abstract Observable<Outcome> new_task(@Query("person_id") String person_id,@Query("name") String name,@Query("max") String max
+    ,@Query("ddl") String ddl,@Query("budget") String budget,@Query("mask") String mask ,@Query("description") String description
+    );
+    @GET("/done_task")
+    public abstract Observable<Outcome> done_task(@Query("task_id") String task_id);
+
+    @GET("/undone_task")
+    public abstract Observable<Outcome> undone_task(@Query("task_id") String task_id);
+    @GET("/new_expense")
+    public abstract Observable<Outcome> new_expense(@Query("person_id") String person_id,@Query("task_id") String task_id,@Query("num") String num
+            ,@Query("time") String time ,@Query("description") String description
+    );
+    @GET("/get_task")
+    public abstract Observable<Task> get_task(@Query("task_id") String task_id);
+    @GET("/update_user")
+    public abstract Observable<Outcome> update_user(@Query("person_id") String person_id,@Query("name") String name,@Query("sex") String sex
+            ,@Query("age") String age ,@Query("email") String email
+    );
+
+    @GET("/user")
+    public abstract Observable<Person> getUser(@Query("id") String id);
 
     @Multipart//上传图片 成功返回“TRUE”
     @POST("upload")

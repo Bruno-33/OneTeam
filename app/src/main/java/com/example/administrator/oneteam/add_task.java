@@ -3,7 +3,8 @@ package com.example.administrator.oneteam;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.icu.util.Calendar;
+
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -17,6 +18,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.administrator.oneteam.Factory.ServiceFactory;
+import com.example.administrator.oneteam.Service.BrunoService;
+import com.example.administrator.oneteam.model.Outcome;
+
+import java.util.Calendar;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class add_task extends AppCompatActivity {
     TextView description,name,max,ddl,budget,back,done;
@@ -24,11 +36,13 @@ public class add_task extends AppCompatActivity {
     ConstraintLayout nn_lt,nmp_lt,nddl_lt,nb_lt,nd_lt;
     AlertDialog.Builder alertDialog;
     ImageView [] all_star;
+    String input_ddl;
     int sum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        input_ddl="";
         init_view();
         init_listener();
     }
@@ -51,21 +65,14 @@ public class add_task extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Calendar tod = Calendar.getInstance();
-                Log.i("here","????");
                 new DatePickerDialog(add_task.this,DatePickerDialog.THEME_HOLO_LIGHT,new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+                        input_ddl=String.valueOf(year)+"-"+String.valueOf(month)+"-"+String.valueOf(dayOfMonth);
+                        input_ddl+=" 00:00:00";
+                        ddl.setText(input_ddl);
                     }//onDateSet是点击了确定后的回调函数，year什么的就是选择的
                 },tod.get(Calendar.YEAR),tod.get(Calendar.MONTH),tod.get(Calendar.DAY_OF_MONTH)).show();//设置一开始是今天的日期
-
-            }
-        });
-        nddl_lt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //todo show calendar
             }
         });
         nb_lt.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +90,38 @@ public class add_task extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo 加入远程数据库
-                finish();
+                if(is_null()){
+                    Toast.makeText(getApplication(),"部分信息没有输入，请完善后提交",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                            .create(BrunoService.class)
+                            .new_task("48",name.getText().toString(),max.getText().toString(),ddl.getText().toString(),budget.getText().toString()
+                            ,String.valueOf(sum),description.getText().toString())
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<Outcome>(){
+                                @Override
+                                public void onCompleted() {
+
+                                }
+                                @Override
+                                public void onError(Throwable e) {
+                                    Toast.makeText(add_task.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                                @Override
+                                public void onNext(Outcome outcome) {
+                                    if(outcome.stage.equals("TRUE")){
+
+                                    }
+                                    else{
+
+                                    }
+                                }
+                            });
+                   finish();
+                }
+
             }
         });
         for(int i=0;i<5;++i){
@@ -143,5 +180,14 @@ public class add_task extends AppCompatActivity {
         tmp.setHint(view.getText().toString());
         tmp.setText("");
         alertDialog.show();
+    }
+
+    public boolean is_null() {
+        if(input_ddl.equals("")) return true;
+        else if(description.getText().toString().equals("")) return true;
+        else if(max.getText().toString().equals("")) return true;
+        else if(name.getText().toString().equals("")) return true;
+        else if(budget.getText().toString().equals("")) return true;
+        return false;
     }
 }

@@ -31,6 +31,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.oneteam.Factory.ServiceFactory;
+import com.example.administrator.oneteam.Service.BrunoService;
+import com.example.administrator.oneteam.model.Outcome;
+import com.example.administrator.oneteam.model.Person;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +43,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import static com.example.administrator.oneteam.R.id.imageView;
+import static com.example.administrator.oneteam.R.id.person_age;
 
 public class person_detail extends AppCompatActivity {
     TextView name,sex,age,time,email,position,back;
@@ -52,20 +62,71 @@ public class person_detail extends AppCompatActivity {
     private Bitmap orc_bitmap;//拍照和相册获取图片的Bitmap
     Context context;
     private String   newImagePath;//新头像的url
-
-
+    private Person person;
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_detail);
+
         //创建pict文件夹
         Picture = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
         context = getApplicationContext();
 
         init_view();
         init_listener();
+
+        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                .create(BrunoService.class)
+                .getUser("48")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Person>(){
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("33",e.getMessage());
+                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(Person outcome){
+                        person = outcome;
+                        ini_text();
+                    }
+                });
     }
 
+    private void ini_text() {
+        name.setText(person.name);
+        sex.setText(person.sex);
+        age.setText(String.valueOf(person.age));
+        position.setText((person.position.equals("leader"))?"队长":"队员");
+        email.setText(person.email);
+        time.setText(person.join_in_time);
+    }
+    private void update(){
+        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                .create(BrunoService.class)
+                .update_user("48",name.getText().toString(),sex.getText().toString(),age.getText().toString(),email.getText().toString())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Outcome>(){
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(Outcome outcome) {
+                    }
+                });
+    }
     final String[] way = new String[]{"拍摄","从相册选择"};
     private void init_listener() {
         n_lt.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +205,7 @@ public class person_detail extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 EditText tmp = view_in.findViewById(R.id.inflate_item);
                 view.setText(tmp.getText());
+                update();
             }
         });
         alertDialog.setNegativeButton("放弃修改",null);
