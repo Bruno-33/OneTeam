@@ -4,9 +4,11 @@ package com.example.administrator.oneteam.Service;
  * Created by Administrator on 2017/12/30 0030.
  */
 
+import com.example.administrator.oneteam.model.Expenditure;
 import com.example.administrator.oneteam.model.Outcome;
 import com.example.administrator.oneteam.model.Person;
 import com.example.administrator.oneteam.model.Task;
+import com.example.administrator.oneteam.model.TaskDetail;
 import com.example.administrator.oneteam.model.time_sheet;
 
 import java.util.List;
@@ -39,8 +41,8 @@ public abstract interface BrunoService {
     @GET("/tasks_undone")//获取用户 参数同getUsers接口
     public abstract Observable<List<Task>> getTasks_undone(@Query("limit") int limit,@Query("offset") int offset);
 
-    @GET("/task")//参数 task_id 和 person_id  返回某个任务被某个人领取的详情
-    public abstract Observable<Task> getTaskDetail(@Query("task_id") String task_id,@Query("person_id") String person_id);
+    @GET("/task_detail")//参数 task_id 和 person_id  返回某个任务被某个人领取的详情
+    public abstract Observable<List<TaskDetail>> getTaskDetail(@Query("task_id") String task_id);
 
     @GET("/time_sheet")//参数 日期 和 person_id 返回当天考勤情况
     public abstract Observable<List<time_sheet>> getTime_sheet(@Query("person_id") String person_id,@Query("date") String date);
@@ -67,7 +69,8 @@ public abstract interface BrunoService {
     public abstract Observable<Outcome> update_user(@Query("person_id") String person_id,@Query("name") String name,@Query("sex") String sex
             ,@Query("age") String age ,@Query("email") String email
     );
-
+    @GET("/get_expense")
+    public abstract Observable<List<Expenditure>> get_expense(@Query("task_id") String task_id,@Query("person_id") String person_id);
     @GET("/user")
     public abstract Observable<Person> getUser(@Query("id") String id);
 

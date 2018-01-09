@@ -43,6 +43,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -72,7 +75,7 @@ public class person_detail extends AppCompatActivity {
         //创建pict文件夹
         Picture = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
         context = getApplicationContext();
-
+        id="48";
         init_view();
         init_listener();
 
@@ -240,7 +243,7 @@ public class person_detail extends AppCompatActivity {
         if ( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
             String filename = timeStampFormat.format(new Date());
-            outputImagepath = new File(Picture, filename + ".jpg");
+            outputImagepath = new File(Picture, id + ".jpg");
             //按时间命名
             // 从文件中创建uri
             Uri uri = Uri.fromFile(outputImagepath);
@@ -312,6 +315,27 @@ public class person_detail extends AppCompatActivity {
             newImagePath = imagePath;
             orc_bitmap = BitmapFactory.decodeFile(imagePath);//获取图片 // orc_bitmap = comp(BitmapFactory.decodeFile(imagePath)); //压缩图
             photo.setImageBitmap(orc_bitmap);
+            File ph = new File(imagePath);
+            ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                    .create(BrunoService.class)
+                    .upload(MultipartBody.Part.createFormData("file", id+".png", RequestBody.create(MediaType.parse("image/png"), new File(imagePath))) )
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Outcome>(){
+                        @Override
+                        public void onCompleted() {
+
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("33",e.getMessage());
+                            Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onNext(Outcome outcome){
+
+                        }
+                    });
         } else {
             Toast.makeText(this, "图片获取失败", Toast.LENGTH_LONG).show();
         }
