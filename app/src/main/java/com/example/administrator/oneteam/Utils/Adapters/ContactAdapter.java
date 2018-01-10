@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.administrator.oneteam.R;
 import com.example.administrator.oneteam.model.Contact;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -46,9 +48,14 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         } else {
             tv_index.setVisibility(View.GONE);
         }
-
+        TextView tv_first_letter = (TextView) convertView.findViewById(R.id.first_letter_contact_item);
         TextView tv_contact_name = (TextView) convertView.findViewById(R.id.tv_contact_name);
         TextView tv_contact_phone_number = (TextView) convertView.findViewById(R.id.tv_contact_phone_number);
+
+        if (contact.getName() != null ){
+            tv_first_letter.setText(contact.getName().substring(0, 1));
+        }
+
         tv_contact_name.setText(contact.getName());
         tv_contact_phone_number.setText(contact.getPhoneNumber());
         return convertView;
