@@ -1,5 +1,7 @@
 package com.example.administrator.oneteam;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         init();
         bindListeners();
         stage = "signin";
-        Glide.with(this).load("http://172.18.92.176:3333/my.PNG").into(photo);
+
     }
 
     private void bindViews(){
@@ -166,6 +168,11 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onNext(Outcome outcome) {
                                         if(outcome.stage.equals("TRUE")){
+                                            SharedPreferences sharedPref = getApplication().getSharedPreferences("MY_PREFERENCE",
+                                                    Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putString("name", et_userName.getText().toString());
+                                            editor.apply();
                                             Intent intent = new Intent(LoginActivity.this, Main.class);
                                             startActivity(intent);
                                         }
@@ -194,6 +201,11 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onNext(Outcome outcome) {
                                         if(outcome.stage.equals("TRUE")){
+                                            SharedPreferences sharedPref = getApplication().getSharedPreferences("MY_PREFERENCE",
+                                                    Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putString("name", et_userName.getText().toString());
+                                            editor.apply();
                                             Intent intent = new Intent(LoginActivity.this, Main.class);
                                             startActivity(intent);
                                         }

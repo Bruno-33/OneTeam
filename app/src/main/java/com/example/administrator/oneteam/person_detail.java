@@ -6,6 +6,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -52,6 +53,7 @@ import rx.schedulers.Schedulers;
 
 import static com.example.administrator.oneteam.R.id.imageView;
 import static com.example.administrator.oneteam.R.id.person_age;
+import static com.example.administrator.oneteam.R.id.person_image;
 
 public class person_detail extends AppCompatActivity {
     TextView name,sex,age,time,email,position,back;
@@ -78,10 +80,11 @@ public class person_detail extends AppCompatActivity {
         id="48";
         init_view();
         init_listener();
-
+        SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
+                Context.MODE_PRIVATE);
         ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
                 .create(BrunoService.class)
-                .getUser("48")
+                .getUserByName(sharedPref.getString("name",""))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Person>(){
@@ -97,7 +100,10 @@ public class person_detail extends AppCompatActivity {
                     @Override
                     public void onNext(Person outcome){
                         person = outcome;
-                        ini_text();
+                        id= String.valueOf(person.person_id);
+                        time.setText(person.join_in_time);
+                        if(person.age!=0)
+                            ini_text();
                     }
                 });
     }
@@ -113,7 +119,7 @@ public class person_detail extends AppCompatActivity {
     private void update(){
         ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
                 .create(BrunoService.class)
-                .update_user("48",name.getText().toString(),sex.getText().toString(),age.getText().toString(),email.getText().toString())
+                .update_user(id,name.getText().toString(),sex.getText().toString(),age.getText().toString(),email.getText().toString())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Outcome>(){
@@ -132,12 +138,12 @@ public class person_detail extends AppCompatActivity {
     }
     final String[] way = new String[]{"拍摄","从相册选择"};
     private void init_listener() {
-        n_lt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                init_alertdialog(name);
-            }
-        });
+//        n_lt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                init_alertdialog(name);
+//            }
+//        });
         s_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,26 +270,7 @@ public class person_detail extends AppCompatActivity {
             startActivityForResult(intent, SELECT_PHOTO);
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case TAKE_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    /*这种方法是通过内存卡的路径进行读取图片，所以的到的图片是拍摄的原图*/
-                    displayImage(outputImagepath.getAbsolutePath());
-                    Log.i("tag", "拍照图片路径>>>>" + outputImagepath);
-                }
-                break;
-            case SELECT_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    handleImgeOnKitKat(data);
-                }
-                break;
-            default:
-                break;
-        }
-    }
+
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void handleImgeOnKitKat(Intent data) {

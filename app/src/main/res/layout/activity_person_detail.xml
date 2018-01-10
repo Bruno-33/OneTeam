@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/name_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="33"
+            android:text=""
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -158,7 +158,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sex_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="男"
+            android:text=""
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -204,7 +204,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/age_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="18"
+            android:text=""
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -250,7 +250,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/position_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="队员"
+            android:text=""
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -296,7 +296,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/email_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="1048392480@qq.com"
+            android:text=""
             android:layout_marginEnd="5dp"
             />
         <ImageView

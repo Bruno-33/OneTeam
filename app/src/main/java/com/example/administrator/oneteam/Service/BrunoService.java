@@ -82,5 +82,6 @@ public abstract interface BrunoService {
     @Multipart//上传图片 成功返回“TRUE”
     @POST("upload")
     public abstract Observable<Outcome>  upload(@Part() MultipartBody.Part file);
-
+    @GET("/user_by_name")
+    public abstract Observable<Person> getUserByName(@Query("name") String name);
 }

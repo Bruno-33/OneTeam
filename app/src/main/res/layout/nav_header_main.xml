@@ -29,15 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/check_in_nav_header_main"
-        android:layout_width="60dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="24dp"
-        android:text="签到"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
 
     <!--<de.hdodenhof.circleimageview.CircleImageView-->

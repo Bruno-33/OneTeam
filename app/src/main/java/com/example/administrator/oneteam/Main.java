@@ -1,7 +1,11 @@
 package com.example.administrator.oneteam;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,20 +23,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.administrator.oneteam.Factory.ServiceFactory;
+import com.example.administrator.oneteam.Service.BrunoService;
 import com.example.administrator.oneteam.Utils.ContactFragment;
 import com.example.administrator.oneteam.Utils.FragmentAdapter;
 import com.example.administrator.oneteam.Utils.InfoFragment;
 import com.example.administrator.oneteam.Utils.SelfTaskFragment;
 import com.example.administrator.oneteam.Utils.TabFragment;
 import com.example.administrator.oneteam.Utils.TaskPoolFragment;
+import com.example.administrator.oneteam.model.Outcome;
+import com.example.administrator.oneteam.model.Person;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.example.administrator.oneteam.R.color.colorPrimary;
 
@@ -130,11 +144,55 @@ public class Main extends AppCompatActivity
                     tmp.scrollToPosition(0);
             }
         });
-        Menu menu1=navigationView.getMenu();
+        SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
+                Context.MODE_PRIVATE);
+        final Menu menu1=navigationView.getMenu();
         MenuItem menuItem=menu1.findItem(R.id.nav_email);
         menuItem.setTitle("123");
-
+        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                .create(BrunoService.class)
+                .getUserByName(sharedPref.getString("name",""))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Person>(){
+                    @Override
+                    public void onCompleted() {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(Person outcome) {
+                        if(outcome.age==0){
+                            new AlertDialog.Builder(Main.this)
+                                    .setTitle("通知")
+                                    .setMessage("请完善您的个人信息")
+                                    .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(getApplication(),person_detail.class);
+                                            startActivityForResult(intent,3333);
+                                        }
+                                    }).show();
+                        }
+                        else{
+                            MenuItem menuItem=menu1.findItem(R.id.nav_email);
+                            menuItem.setTitle(outcome.email);
+                            menuItem=menu1.findItem(R.id.nav_user);
+                            menuItem.setTitle(outcome.name);
+                            menuItem=menu1.findItem(R.id.nav_state);
+                            menuItem.setTitle(outcome.position.equals("leader")?"队长":"队员");
+                            menuItem=menu1.findItem(R.id.nav_sex);
+                            menuItem.setTitle(outcome.sex);
+                            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                            Glide.with(getApplication()).load("http://172.18.92.176:3333/my.PNG").into(imageView);
+                        }
+                    }
+                });
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -188,18 +246,63 @@ public class Main extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_email) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_user) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_sex) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final Menu menu1=navigationView.getMenu();
+        SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
+                Context.MODE_PRIVATE);
+        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                .create(BrunoService.class)
+                .getUserByName(sharedPref.getString("name",""))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Person>(){
+                    @Override
+                    public void onCompleted() {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(Person outcome) {
+                            MenuItem menuItem=menu1.findItem(R.id.nav_email);
+                            menuItem.setTitle(outcome.email);
+                            menuItem=menu1.findItem(R.id.nav_user);
+                            menuItem.setTitle(outcome.name);
+                            menuItem=menu1.findItem(R.id.nav_state);
+                            menuItem.setTitle(outcome.position.equals("leader")?"队长":"队员");
+                            menuItem=menu1.findItem(R.id.nav_sex);
+                            menuItem.setTitle(outcome.sex);
+                            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                            Glide.with(getApplication()).load("http://172.18.92.176:3333/my.PNG").into(imageView);
+                    }
+                });
     }
 }
