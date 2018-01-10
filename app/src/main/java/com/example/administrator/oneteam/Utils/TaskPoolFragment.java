@@ -3,6 +3,7 @@ package com.example.administrator.oneteam.Utils;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,10 +19,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.administrator.oneteam.Factory.ServiceFactory;
 import com.example.administrator.oneteam.R;
+import com.example.administrator.oneteam.Service.BrunoService;
 import com.example.administrator.oneteam.expense_detail;
+import com.example.administrator.oneteam.model.Expenditure;
 import com.example.administrator.oneteam.model.Task;
 import com.example.administrator.oneteam.tools.CommonAdapter;
 import com.example.administrator.oneteam.tools.GreetingText;
@@ -41,6 +46,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by D105-01 on 2017/12/24.
  */
@@ -49,17 +58,19 @@ public class TaskPoolFragment  extends Fragment{
     private static final String TAG = "TaskPoolFragment";
     private RecyclerView expense_rv;
     private View view;
-    private CommonAdapter<Map<String,String>> commonAdapter;
-    private List<Map<String,String>> datalist;
+    private CommonAdapter<Expenditure> commonAdapter;
+    private List<Expenditure> datalist;
+    private List<Expenditure> expenditures;
     private SmartRefreshLayout refresh;
     private static final int UPDATE_GREETING_TEXT = 1;
     private LinearLayout window;
     private TextView choose,choose1,choose2;
     private String colorbule = "#3060f0";
     private OneTeamCalendar self_calender;
+    int offset[]={0,0};
+    int position=0;
+
     @SuppressLint("HandlerLeak")
-
-
     public static TaskPoolFragment newInstance(){
         return new TaskPoolFragment();
     }
@@ -73,6 +84,28 @@ public class TaskPoolFragment  extends Fragment{
         init_recyclerview();
         init_reflashview();
         init_window();
+        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+                .create(BrunoService.class)
+                .get_expenses(3,offset[position])
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Expenditure>>(){
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(List<Expenditure> outcome){
+                        for (int i=0;i<outcome.size();++i){
+                            datalist.add(outcome.get(i));
+                        }
+                        commonAdapter.notifyDataSetChanged();
+                    }
+                });
         final OneTeamCalendar oneTeamCalendar = view.findViewById(R.id.one_team_calendar);
         oneTeamCalendar.setDateClickListener(new OneTeamCalendarAdapter.OnDateClickListener() {
             @Override
@@ -172,21 +205,22 @@ public class TaskPoolFragment  extends Fragment{
 
     private void init_recyclerview() {
         datalist = new ArrayList<>();
-        commonAdapter = new CommonAdapter<Map<String,String>>(getActivity(),R.layout.expense_recyclerview_item,datalist) {
+        commonAdapter = new CommonAdapter<Expenditure>(getActivity(),R.layout.expense_recyclerview_item,datalist) {
             @Override
-            public void convert(ViewHolder holder, Map<String,String> task){
+            public void convert(ViewHolder holder,Expenditure task){
                 final TextView title=holder.getView(R.id.rv_name);
                 final TextView expense = holder.getView(R.id.rv_expense);
                 final ImageView done = holder.getView(R.id.rv_image);
-                title.setText(task.get("name"));
-                expense.setText(task.get("expense"));
-                Glide.with(getActivity()).load("http://172.18.92.176:3333/"+task.get("url")).into(done);
+                title.setText(task.expenditure_description);
+                expense.setText(String.valueOf(task.money));
+                Glide.with(getActivity()).load("http://172.18.92.176:3333/"+task.person_id+".png").into(done);
             }
         };
         commonAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(getContext(), expense_detail.class);
+                intent.putExtra("id",String.valueOf(datalist.get(position).expenditure_id));
                 startActivity(intent);
             }
             @Override
@@ -195,18 +229,7 @@ public class TaskPoolFragment  extends Fragment{
         });
         expense_rv = view.findViewById(R.id.self_expense_recyclerview);
 
-        Map<String,String> tmp = new HashMap<>();
-        tmp.put("name","test");
-        tmp.put("expense","33.33");
-        tmp.put("url","my.PNG");
-        datalist.add(tmp);
-        for(int i=0;i<5;++i){
-            tmp = new HashMap<>();
-            tmp.put("name","test");
-            tmp.put("expense","33.33"+String.valueOf(i));
-            tmp.put("url","my.PNG");
-            datalist.add(tmp);
-        }
+
         expense_rv.setAdapter(commonAdapter);
         expense_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         commonAdapter.notifyDataSetChanged();

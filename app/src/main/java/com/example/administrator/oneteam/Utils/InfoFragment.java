@@ -92,27 +92,27 @@ public class InfoFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // super.onCreate(savedInstanceState);
         view = inflater.inflate(R.layout.info_fragment, null);
-        ButterKnife.bind(getActivity());
-        widget = view.findViewById(R.id.calendarView);
-
-        typeface = Typeface.createFromAsset(getActivity().getAssets(),"font/digifaw.ttf");
-        ID_Init();
-        //监听日期被选择
-        onDateSelectedListener= new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                View view_in = layoutInflater.inflate(R.layout.info_dialog_layout,null); //点击日期后，跳转出他的打卡时间段
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setView(view_in);
-                builder.create().show();
-                TextView day_date = (TextView) view_in.findViewById(R.id.day_date);
-                day_date.setText(getSelectedDatesString());
-            }
-        };
-        context = getActivity();
-        Calendar_Init();
-        Listener_Init();
+//        ButterKnife.bind(getActivity());
+//        widget = view.findViewById(R.id.calendarView);
+//
+//        typeface = Typeface.createFromAsset(getActivity().getAssets(),"font/digifaw.ttf");
+//        ID_Init();
+//        //监听日期被选择
+//        onDateSelectedListener= new OnDateSelectedListener() {
+//            @Override
+//            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+//                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+//                View view_in = layoutInflater.inflate(R.layout.info_dialog_layout,null); //点击日期后，跳转出他的打卡时间段
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setView(view_in);
+//                builder.create().show();
+//                TextView day_date = (TextView) view_in.findViewById(R.id.day_date);
+//                day_date.setText(getSelectedDatesString());
+//            }
+//        };
+//        context = getActivity();
+//        Calendar_Init();
+//        Listener_Init();
         return view;
     }
 
@@ -326,7 +326,7 @@ public class InfoFragment extends Fragment  {
                 }
             }
         });
-        thread.start();
+       // thread.start();
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {

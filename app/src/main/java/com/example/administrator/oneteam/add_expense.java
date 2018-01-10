@@ -29,15 +29,17 @@ public class add_expense extends AppCompatActivity {
     TextView description,name,money,time,back,done;
     ConstraintLayout en_lt,ee_lt,et_lt;
     AlertDialog.Builder alertDialog;
-    String input_ddl;
+    String input_ddl,id,task_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        task_name = getIntent().getStringExtra("name");
+        id = getIntent().getStringExtra("id");
         input_ddl="";
         init_view();
         init_listener();
-        name.setText("编码器的使用");
+        name.setText(task_name);
     }
 
     private void init_listener() {
@@ -81,7 +83,7 @@ public class add_expense extends AppCompatActivity {
                 else{
                     ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
                             .create(BrunoService.class)
-                            .new_expense("48","1",money.getText().toString(),input_ddl,description.getText().toString())
+                            .new_expense("48",id,money.getText().toString(),input_ddl,description.getText().toString())
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<Outcome>(){

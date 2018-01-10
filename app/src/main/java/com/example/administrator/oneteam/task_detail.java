@@ -272,6 +272,8 @@ public class task_detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(),add_expense.class);
+                intent.putExtra("id",String.valueOf(task.task_id));
+                intent.putExtra("name",task.task_name);
                 startActivity(intent);
             }
         });

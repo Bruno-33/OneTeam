@@ -130,6 +130,10 @@ public class Main extends AppCompatActivity
                     tmp.scrollToPosition(0);
             }
         });
+        Menu menu1=navigationView.getMenu();
+        MenuItem menuItem=menu1.findItem(R.id.nav_email);
+        menuItem.setTitle("123");
+
     }
 
     @Override
@@ -179,15 +183,15 @@ public class Main extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_email) {
             Intent intent = new Intent(this,person_detail.class);
             startActivity(intent);
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_email) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_user) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_sex) {
 
         } else if (id == R.id.nav_share) {
 

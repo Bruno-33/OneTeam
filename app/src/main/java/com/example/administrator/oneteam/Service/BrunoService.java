@@ -35,6 +35,9 @@ public abstract interface BrunoService {
     @GET("/tasks")//获取用户 参数同getUsers接口
     public abstract Observable<List<Task>> getTasks(@Query("limit") int limit,@Query("offset") int offset);
 
+    @GET("/get_expenses")
+    public abstract Observable<List<Expenditure>> get_expenses(@Query("limit") int limit,@Query("offset") int offset);
+
     @GET("/tasks_done")//获取用户 参数同getUsers接口
     public abstract Observable<List<Task>> getTasks_done(@Query("limit") int limit,@Query("offset") int offset);
 
@@ -73,6 +76,8 @@ public abstract interface BrunoService {
     public abstract Observable<List<Expenditure>> get_expense(@Query("task_id") String task_id,@Query("person_id") String person_id);
     @GET("/user")
     public abstract Observable<Person> getUser(@Query("id") String id);
+    @GET("/get_expense_by_id")
+    public abstract Observable<Expenditure> get_expense_by_id(@Query("id") String id);
 
     @Multipart//上传图片 成功返回“TRUE”
     @POST("upload")
