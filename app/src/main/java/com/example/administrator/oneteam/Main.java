@@ -144,11 +144,11 @@ public class Main extends AppCompatActivity
         MenuItem menuItem=menu1.findItem(R.id.nav_email);
         menuItem.setTitle("123");
         menuItem=menu1.findItem(R.id.nav_user);
-        menuItem.setTitle("33");
+        menuItem.setTitle("Jack");
         menuItem=menu1.findItem(R.id.nav_state);
         menuItem.setTitle("队员");
         menuItem=menu1.findItem(R.id.nav_sex);
-        menuItem.setTitle("男");
+        menuItem.setTitle("18");
         new AlertDialog.Builder(Main.this)
                 .setTitle("通知")
                 .setMessage("请完善您的个人信息")
