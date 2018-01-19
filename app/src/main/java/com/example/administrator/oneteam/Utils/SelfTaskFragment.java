@@ -92,7 +92,6 @@ public class SelfTaskFragment extends Fragment {
     private OneTeamCalendar self_calender;
 
     int offset[]={0,0,0};
-
     //endregion
 
     /**
