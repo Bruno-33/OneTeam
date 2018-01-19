@@ -117,33 +117,33 @@ public class person_detail extends AppCompatActivity {
         time.setText(person.join_in_time);
     }
     private void update(){
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .update_user(id,name.getText().toString(),sex.getText().toString(),age.getText().toString(),email.getText().toString())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Outcome>(){
-                    @Override
-                    public void onCompleted() {
-
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Outcome outcome) {
-                    }
-                });
+//        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+//                .create(BrunoService.class)
+//                .update_user(id,name.getText().toString(),sex.getText().toString(),age.getText().toString(),email.getText().toString())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<Outcome>(){
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    }
+//                    @Override
+//                    public void onNext(Outcome outcome) {
+//                    }
+//                });
     }
     final String[] way = new String[]{"拍摄","从相册选择"};
     private void init_listener() {
-//        n_lt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                init_alertdialog(name);
-//            }
-//        });
+        n_lt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                init_alertdialog(name);
+            }
+        });
         s_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -317,7 +317,7 @@ public class person_detail extends AppCompatActivity {
                         @Override
                         public void onError(Throwable e) {
                             Log.e("33",e.getMessage());
-                            Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
                         }
                         @Override
                         public void onNext(Outcome outcome){
@@ -325,7 +325,7 @@ public class person_detail extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(this, "图片获取失败", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "图片获取失败", Toast.LENGTH_LONG).show();
         }
     }
 
