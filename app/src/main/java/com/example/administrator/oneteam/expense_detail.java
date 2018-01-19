@@ -30,31 +30,31 @@ public class expense_detail extends AppCompatActivity {
         setContentView(R.layout.activity_expense_detail);
         init_view();
         expense_id = getIntent().getStringExtra("id");
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .get_expense_by_id(expense_id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Expenditure>(){
-                    @Override
-                    public void onCompleted() {
-
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Expenditure outcome){
-                        expenditure= outcome;
-                        money.setText(String.valueOf(outcome.money));
-                        time.setText(outcome.expenditure_date);
-                        state.setText(outcome.state.equals("undone")?"未报销":"已报销");
-                        description.setText("支出描述: "+outcome.expenditure_description);
-                        //Glide.with(getApplication()).load("http://172.18.92.176:3333/"+String.valueOf(outcome.person_id)+".png").into(photo);
-                        get_name();
-                    }
-                });
+//        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+//                .create(BrunoService.class)
+//                .get_expense_by_id(expense_id)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<Expenditure>(){
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    }
+//                    @Override
+//                    public void onNext(Expenditure outcome){
+//                        expenditure= outcome;
+//                        money.setText(String.valueOf(outcome.money));
+//                        time.setText(outcome.expenditure_date);
+//                        state.setText(outcome.state.equals("undone")?"未报销":"已报销");
+//                        description.setText("支出描述: "+outcome.expenditure_description);
+//                        //Glide.with(getApplication()).load("http://172.18.92.176:3333/"+String.valueOf(outcome.person_id)+".png").into(photo);
+//                        get_name();
+//                    }
+//                });
 
 
     }
