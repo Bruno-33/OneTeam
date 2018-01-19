@@ -344,4 +344,25 @@ public class person_detail extends AppCompatActivity {
         return path;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAKE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    /*这种方法是通过内存卡的路径进行读取图片，所以的到的图片是拍摄的原图*/
+                    displayImage(outputImagepath.getAbsolutePath());
+                    Log.i("tag", "拍照图片路径>>>>" + outputImagepath);
+                }
+                break;
+            case SELECT_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    handleImgeOnKitKat(data);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 }

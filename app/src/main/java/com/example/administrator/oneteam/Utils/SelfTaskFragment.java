@@ -272,85 +272,55 @@ public class SelfTaskFragment extends Fragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 if(position==0){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks_done(3,0)
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-                                    offset[position]=0;
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;array[position].size()!=0;++i){
-                                        array[position].remove(0);
-                                    }
-                                    for(int i=0;i< outcome.size();++i){
-                                        array[position].add(outcome.get(i));
-                                    }
-                                   change_datalist();
-                                }
-                            });
+                    Task task = new Task();
+                    task.task_state = "done";
+                    task.task_mark=4;
+                    task.task_name="无人机姿态调整";
+                    task.task_deadline="2017/01/25";
+                    array[position].add(task);
+                    task = new Task();
+                    task.task_state = "done";
+                    task.task_mark=5;
+                    task.task_name="6050的使用";
+                    task.task_deadline="2017/01/30";
+                    array[position].add(task);
+                    task = new Task();
+                    task.task_state = "done";
+                    task.task_mark=3;
+                    task.task_name="无人机云台控制";
+                    task.task_deadline="2017/01/28";
+                    array[position].add(task);
+                    change_datalist();
                 }
                 else if(position==1){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks_undone(3,0)
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-                                    offset[position]=0;
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;array[position].size()!=0;++i) array[position].remove(0);
-                                    for(int i=0;i< outcome.size();++i){
-                                        array[position].add(outcome.get(i));
-                                    }
-                                    change_datalist();
-                                }
-                            });
+                    Task task = new Task();
+                    task.task_state = "undone";
+                    task.task_mark=4;
+                    task.task_name="无人机实现翻滚";
+                    task.task_deadline="2017/01/25";
+                    array[position].add(task);
+                    task = new Task();
+                    task.task_state = "undone";
+                    task.task_mark=3;
+                    task.task_name="无人机实现定点移动";
+                    task.task_deadline="2017/01/16";
+                    array[position].add(task);
+                    task = new Task();
+                    task.task_state = "undone";
+                    task.task_mark=5;
+                    task.task_name="CNN人脸识别";
+                    task.task_deadline="2017/01/31";
+                    array[position].add(task);
+                    change_datalist();
                 }
                 else if(position==2){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks(3,0)
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-                                    offset[position]=0;
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;array[position].size()!=0;++i){
-                                        array[position].remove(0);
-                                    }
-                                    for(int i=0;i< outcome.size();++i){
-                                        Log.e("3333",String.valueOf(outcome.size()));
-                                        array[position].add(outcome.get(i));
-                                    }
-                                    change_datalist();
-                                    Log.e("3333444",String.valueOf(array[position].size()));
-                                }
-                            });
+                    Task task = new Task();
+                    task.task_state = "undone";
+                    task.task_mark=4;
+                    task.task_name="无人机实现翻滚";
+                    task.task_deadline="2017/01/25";
+                    array[position].add(task);
+                    change_datalist();
                 }
                 refreshlayout.finishRefresh();
             }
@@ -360,76 +330,17 @@ public class SelfTaskFragment extends Fragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 offset[position]+=3;
                 if(position==0){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks_done(3,offset[position])
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;i< outcome.size();++i){
-                                        array[position].add(outcome.get(i));
-                                    }
-                                   change_datalist();
-                                }
-                            });
                 }
                 else if(position==1){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks_undone(3,offset[position])
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;i< outcome.size();++i){
-                                        array[position].add(outcome.get(i));
-                                    }
-                                    change_datalist();
-                                }
-                            });
+                    Task task = new Task();
+                    task.task_state = "undone";
+                    task.task_mark=5;
+                    task.task_name="安卓";
+                    task.task_deadline="2017/01/25";
+                    array[position].add(task);
+                    change_datalist();
                 }
                else if(position==2){
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .getTasks(3,offset[position])
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<Task>>(){
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(List<Task> outcome) {
-                                    for(int i=0;i< outcome.size();++i){
-                                        array[position].add(outcome.get(i));
-                                    }
-                                   change_datalist();
-                                }
-                            });
                 }
                 refresh.finishLoadmore();
             }
@@ -444,7 +355,6 @@ public class SelfTaskFragment extends Fragment {
         for(int i=0;i<array[position].size();++i){
             datalist.add(array[position].get(i));
         }
-        Log.e("1234",String.valueOf(datalist.size()));
         commonAdapter.notifyDataSetChanged();
     }
 
@@ -455,7 +365,6 @@ public class SelfTaskFragment extends Fragment {
             public void convert(final ViewHolder holder, Task task) {
                 final TextView title=holder.getView(R.id.item_title);
                 final TextView ddl = holder.getView(R.id.itme_ddl);
-                final String font = title.getFontFeatureSettings();
                 final Button  checkbox = holder.getView(R.id.item_checkbox);
                 ImageView star ;
                 ddl.setText("DDL:"+ task.task_deadline);

@@ -95,61 +95,7 @@ public class task_detail extends AppCompatActivity {
                                    @Override
                                    public void onNext(Person outcome){
                                        thepersons.add(outcome);
-                                       Map<String,String> tmp;
-                                       tmp = new HashMap<>();
-                                       tmp.put("name",outcome.name);
-                                       tmp.put("url",outcome.photo_url);
-                                       for(int i=0;i<taskdetail.size();++i){
-                                           if(outcome.person_id==taskdetail.get(i).person_id){
-                                               tmp.put("state",taskdetail.get(i).finish_time.equals("undone")?"未完成":"已完成");
-                                               break;
-                                           }
-                                       }
-                                       datalist.add(tmp);
-                                       commonAdapter.notifyDataSetChanged();
-                                   }
-                               });
-                   }
-                   for (int i=0;i<taskdetail.size();++i){
-                       ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                               .create(BrunoService.class)
-                               .get_expense(id,String.valueOf(taskdetail.get(i).person_id))
-                               .subscribeOn(Schedulers.newThread())
-                               .observeOn(AndroidSchedulers.mainThread())
-                               .subscribe(new Subscriber<List<Expenditure>>(){
-                                   @Override
-                                   public void onCompleted() {
 
-                                   }
-                                   @Override
-                                   public void onError(Throwable e) {
-                                       Log.e("33",e.getMessage());
-                                       Toast.makeText(task_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                   }
-                                   @Override
-                                   public void onNext(List<Expenditure> outcome){
-                                       if(outcome.size()!=0){
-                                           Map<String,String> tmp;
-                                           tmp = new HashMap<>();
-                                           for(int i=0;i<thepersons.size();++i){
-                                               if(thepersons.get(i).person_id==outcome.get(0).person_id){
-                                                   tmp.put("name",thepersons.get(i).name);
-                                                   tmp.put("url",thepersons.get(i).photo_url);
-                                                   break;
-                                               }
-                                           }
-                                           int sum_un=0,sum=0;
-                                           for(int i=0;i<outcome.size();++i){
-                                              if(outcome.get(i).state.equals("undone")){
-                                                  sum_un+=outcome.get(i).money;
-                                              }
-                                               sum+=outcome.get(i).money;
-                                           }
-                                           tmp.put("state",String.valueOf(sum_un)+"/"+String.valueOf(sum)+" 未报销");
-                                           budget_rate.setText(String.valueOf(sum)+"/"+String.valueOf(task.task_budget));
-                                           datalist1.add(tmp);
-                                           commonAdapter1.notifyDataSetChanged();
-                                       }
                                    }
                                });
                    }
@@ -171,61 +117,23 @@ public class task_detail extends AppCompatActivity {
         thepersons = new ArrayList<Person>();
         init_view();
         init_listener();
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .get_task(id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Task>(){
-                    @Override
-                    public void onCompleted() {
+        for(int i=4;i<5;++i){
+            ImageView star =(ImageView) findViewById(all_star[i]);
+            star.setVisibility(View.INVISIBLE);
+        }
 
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("343",e.getMessage());
-                        Toast.makeText(task_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Task outcome){
-                        task = new Task();
-                        task = outcome;
-                        name.setText(task.task_name);
-                        ddl.setText(task.task_deadline);
-                        newsdate.setText(task.task_newstime);
-                        for(int i=outcome.task_mark;i<5;++i){
-                            ImageView star =(ImageView) findViewById(all_star[i]);
-                            star.setVisibility(View.INVISIBLE);
-                        }
-                        handler.sendEmptyMessage(0);
-                    }
-                });
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .getTaskDetail(id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<TaskDetail>>(){
-                    @Override
-                    public void onCompleted() {
-
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("343",e.getMessage());
-                        Toast.makeText(task_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(List<TaskDetail> outcome){
-                        taskdetail = new ArrayList<TaskDetail>();
-                        for(int i=0;i<outcome.size();++i){
-                            taskdetail.add(outcome.get(i));
-                        }
-                        handler.sendEmptyMessage(1);
-                    }
-                });
-
-
+        rate.setText(String.valueOf(1)+"/"+String.valueOf(2));
+        Map<String,String> tmp;
+        tmp = new HashMap<>();
+        tmp.put("name","Bruno");
+        tmp.put("state","未完成");
+        datalist.add(tmp);
+        commonAdapter.notifyDataSetChanged();
+        tmp = new HashMap<>();
+        tmp.put("name","Bruno");
+        tmp.put("state","未报销");
+        datalist1.add(tmp);
+        commonAdapter1.notifyDataSetChanged();
     }
 
     private void init_listener() {
@@ -264,7 +172,14 @@ public class task_detail extends AppCompatActivity {
         add_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(datalist.size()==1){
+                    Map<String,String> tmp;
+                    tmp = new HashMap<>();
+                    tmp.put("name","33");
+                    tmp.put("state","未完成");
+                    datalist.add(tmp);
+                    commonAdapter.notifyDataSetChanged();
+                }
             }
         });
         add_expense.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +188,7 @@ public class task_detail extends AppCompatActivity {
                 Intent intent = new Intent(getApplication(),add_expense.class);
                 intent.putExtra("id",String.valueOf(task.task_id));
                 intent.putExtra("name",task.task_name);
-                startActivity(intent);
+                startActivityForResult(intent,33);
             }
         });
     }
@@ -307,7 +222,12 @@ public class task_detail extends AppCompatActivity {
                 final ImageView img = holder.getView(R.id.user_image);
                 final TextView state = holder.getView(R.id.user_task_state);
                 title.setText(task.get("name"));
-                Glide.with(getApplication()).load("http://172.18.92.176:3333/"+task.get("url")).into(img);
+                if(task.get("name").equals("Bruno")){
+                    img.setImageResource(R.drawable.icon);
+                }
+                else{
+                    img.setImageResource(R.mipmap.phone);
+                }
                 state.setText(task.get("state"));
             }
         };
@@ -326,7 +246,12 @@ public class task_detail extends AppCompatActivity {
                 final ImageView img = holder.getView(R.id.user_image);
                 final TextView state = holder.getView(R.id.user_task_state);
                 title.setText(task.get("name"));
-                Glide.with(getApplication()).load("http://172.18.92.176:3333/"+task.get("url")).into(img);
+                if(task.get("name").equals("Bruno")){
+                    img.setImageResource(R.drawable.icon);
+                }
+                else{
+                    img.setImageResource(R.mipmap.phone);
+                }
                 state.setText(task.get("state"));
             }
         };

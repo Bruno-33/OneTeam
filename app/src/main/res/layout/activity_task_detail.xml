@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/task_title"
                 android:layout_marginStart="5dp"
-                android:text="任务名"
+                android:text="无人机实现翻滚"
                 android:textColor="#111"
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/task_presenter"
-                android:text="name"
+                android:text="郑培炜"
                 />
             <View
                 android:layout_width="1px"
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/task_newstime"
-                android:text="2018/01/01"
+                android:text="2018/01/10"
                 android:textSize="13sp"
                 android:textColor="#8a8a8a"
                 />
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/task_ddl"
-                android:text="2018/01/07"
+                android:text="2018/01/25"
                 android:textColor="#000"
                 />
         </android.support.constraint.ConstraintLayout>
@@ -252,7 +252,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/task_person"
-                android:text="33 ..."
+                android:text="Bruno "
                 android:textColor="#000"
                 />
             <ImageView
@@ -269,7 +269,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="完成"
+                android:text="    "
                 app:layout_constraintBottom_toBottomOf="@id/task_down"
                 app:layout_constraintTop_toTopOf="@id/task_down"
                 app:layout_constraintEnd_toStartOf="@id/task_down"

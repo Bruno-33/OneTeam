@@ -35,8 +35,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-
-
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_alignParentLeft="true"
             android:layout_below="@id/choose_layout"
