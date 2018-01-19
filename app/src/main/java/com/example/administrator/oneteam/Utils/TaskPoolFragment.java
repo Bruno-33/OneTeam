@@ -70,6 +70,9 @@ public class TaskPoolFragment  extends Fragment{
     int offset[]={0,0};
     int position=0;
 
+    //未报销为0，已报销为1，初始化为已报销
+    private int currentTab = 1;
+
     @SuppressLint("HandlerLeak")
     public static TaskPoolFragment newInstance(){
         return new TaskPoolFragment();
@@ -84,28 +87,9 @@ public class TaskPoolFragment  extends Fragment{
         init_recyclerview();
         init_reflashview();
         init_window();
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .get_expenses(3,offset[position])
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Expenditure>>(){
-                    @Override
-                    public void onCompleted() {
 
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(List<Expenditure> outcome){
-                        for (int i=0;i<outcome.size();++i){
-                            datalist.add(outcome.get(i));
-                        }
-                        commonAdapter.notifyDataSetChanged();
-                    }
-                });
+//
+
         final OneTeamCalendar oneTeamCalendar = view.findViewById(R.id.one_team_calendar);
         oneTeamCalendar.setDateClickListener(new OneTeamCalendarAdapter.OnDateClickListener() {
             @Override
@@ -158,6 +142,7 @@ public class TaskPoolFragment  extends Fragment{
                 choose.setTextColor(Color.parseColor("#000000"));
             }
         });
+        //已报销
         choose1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -168,8 +153,10 @@ public class TaskPoolFragment  extends Fragment{
                 choose2.setTextColor(Color.parseColor("#000000"));
                 choose.setTag(0);
                 choose.setTextColor(Color.parseColor("#000000"));
+                currentTab = 1;
             }
         });
+        //未报销
         choose2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -180,6 +167,7 @@ public class TaskPoolFragment  extends Fragment{
                 choose1.setTextColor(Color.parseColor("#000000"));
                 choose.setTag(0);
                 choose.setTextColor(Color.parseColor("#000000"));
+                currentTab = 0;
             }
         });
     }
@@ -192,6 +180,15 @@ public class TaskPoolFragment  extends Fragment{
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(1000);
+                //若是未报销
+                if (currentTab == 0){
+                    //Toast.makeText(getActivity(),"Vincent is doing some refreshing",Toast.LENGTH_SHORT).show();
+                    Expenditure expenditure = new Expenditure();
+                    expenditure.expenditure_description = "购买手办";
+                    datalist.add(expenditure);
+                    commonAdapter.notifyDataSetChanged();
+                }
+
             }
         });
         refresh.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -213,7 +210,7 @@ public class TaskPoolFragment  extends Fragment{
                 final ImageView done = holder.getView(R.id.rv_image);
                 title.setText(task.expenditure_description);
                 expense.setText(String.valueOf(task.money));
-                Glide.with(getActivity()).load("http://172.18.92.176:3333/"+task.person_id+".png").into(done);
+                //Glide.with(getActivity()).load("http://172.18.92.176:3333/"+task.person_id+".png").into(done);
             }
         };
         commonAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener(){

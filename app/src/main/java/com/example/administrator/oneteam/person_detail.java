@@ -82,30 +82,30 @@ public class person_detail extends AppCompatActivity {
         init_listener();
         SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
                 Context.MODE_PRIVATE);
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .getUserByName(sharedPref.getString("name",""))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Person>(){
-                    @Override
-                    public void onCompleted() {
-
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("33",e.getMessage());
-                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Person outcome){
-                        person = outcome;
-                        id= String.valueOf(person.person_id);
-                        time.setText(person.join_in_time);
-                        if(person.age!=0)
-                            ini_text();
-                    }
-                });
+//        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
+//                .create(BrunoService.class)
+//                .getUserByName(sharedPref.getString("name",""))
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<Person>(){
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("33",e.getMessage());
+//                        Toast.makeText(person_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    }
+//                    @Override
+//                    public void onNext(Person outcome){
+//                        person = outcome;
+//                        id= String.valueOf(person.person_id);
+//                        time.setText(person.join_in_time);
+//                        if(person.age!=0)
+//                            ini_text();
+//                    }
+//                });
     }
 
     private void ini_text() {
