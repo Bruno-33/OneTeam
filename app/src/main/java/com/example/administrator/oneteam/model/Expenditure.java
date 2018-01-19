@@ -33,6 +33,6 @@ public class Expenditure {
         this.expenditure_description = "desp";
         this.expenditure_date = "date";
         this.state = "state";
-        this.money = 1;
+        this.money = 100;
     }
 }

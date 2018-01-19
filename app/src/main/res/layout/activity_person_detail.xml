@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/name_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text=""
+            android:text="Jack"
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -342,16 +342,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/time_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="2011/01/01"
+            android:text="2018/01/19"
             android:layout_marginEnd="5dp"
             />
         <ImageView
-            android:layout_width="20dp"
+            android:layout_width="0dp"
             android:layout_height="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/right"
             android:layout_marginEnd="10dp"
             android:id="@+id/time_more"
             />

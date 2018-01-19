@@ -63,7 +63,7 @@
             android:id="@+id/expense_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/vincent"
+            android:src="@mipmap/photo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/photo_more"
@@ -111,7 +111,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/name_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="33"
+            android:text="100"
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -157,7 +157,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sex_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="2018/01/01"
+            android:text="2018/01/19"
             android:layout_marginEnd="5dp"
             />
         <ImageView
@@ -277,7 +277,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="支出描述: test fot description\nen_des\nen_des\n"
+        android:text="支出描述: 购买手办"
         android:textColor="#000"
         android:id="@+id/en_des"
         app:layout_constraintTop_toTopOf="parent"

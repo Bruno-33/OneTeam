@@ -51,7 +51,7 @@ public class expense_detail extends AppCompatActivity {
                         time.setText(outcome.expenditure_date);
                         state.setText(outcome.state.equals("undone")?"未报销":"已报销");
                         description.setText("支出描述: "+outcome.expenditure_description);
-                        Glide.with(getApplication()).load("http://172.18.92.176:3333/"+String.valueOf(outcome.person_id)+".png").into(photo);
+                        //Glide.with(getApplication()).load("http://172.18.92.176:3333/"+String.valueOf(outcome.person_id)+".png").into(photo);
                         get_name();
                     }
                 });
