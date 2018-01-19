@@ -120,6 +120,7 @@ public class task_detail extends AppCompatActivity {
                     datalist.add(tmp);
                     commonAdapter.notifyDataSetChanged();
                     rate.setText("2/2");
+                    persons.setText("Bruno、Jack");
                 }
             }
         });
