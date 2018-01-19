@@ -94,31 +94,6 @@ public class add_task extends AppCompatActivity {
                     Toast.makeText(getApplication(),"部分信息没有输入，请完善后提交",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .new_task("48",name.getText().toString(),max.getText().toString(),ddl.getText().toString(),budget.getText().toString()
-                            ,String.valueOf(sum),description.getText().toString())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<Outcome>(){
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(add_task.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(Outcome outcome) {
-                                    if(outcome.stage.equals("TRUE")){
-
-                                    }
-                                    else{
-
-                                    }
-                                }
-                            });
                    finish();
                 }
 

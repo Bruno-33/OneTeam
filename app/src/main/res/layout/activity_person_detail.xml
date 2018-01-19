@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/name_more"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Jack"
+            android:text="123"
             android:layout_marginEnd="5dp"
             />
         <ImageView

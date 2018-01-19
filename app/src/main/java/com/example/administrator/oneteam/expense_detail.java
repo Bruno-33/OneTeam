@@ -2,6 +2,7 @@ package com.example.administrator.oneteam;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,12 @@ public class expense_detail extends AppCompatActivity {
         setContentView(R.layout.activity_expense_detail);
         init_view();
         expense_id = getIntent().getStringExtra("id");
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 //        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
 //                .create(BrunoService.class)
 //                .get_expense_by_id(expense_id)
@@ -70,24 +77,6 @@ public class expense_detail extends AppCompatActivity {
     }
 
     public void get_name() {
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .get_task(String.valueOf(expenditure.task_id))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Task>(){
-                    @Override
-                    public void onCompleted() {
 
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Task outcome){
-                        task_name.setText(outcome.task_name);
-                    }
-                });
     }
 }

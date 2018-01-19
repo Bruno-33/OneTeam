@@ -158,6 +158,7 @@ public class person_detail extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(which==0){
+                            Toast.makeText(getApplicationContext(),"33",Toast.LENGTH_LONG).show();
                             xiangjiClick(view);
                         }
                         if(which==1){
@@ -228,9 +229,11 @@ public class person_detail extends AppCompatActivity {
      * 打开相机
      */
     public void xiangjiClick(View view) {
+
         //checkSelfPermission 检测有没有 权限，PackageManager.PERMISSION_GRANTED 有权限，PackageManager.PERMISSION_DENIED  拒绝权限，一定要先判断权限,再打开相机,否则会报错
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(person_detail.this, new String[]{Manifest.permission.CAMERA}, 1);
+
         }
         else {
             try {
@@ -257,6 +260,7 @@ public class person_detail extends AppCompatActivity {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         }
         // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
+
         startActivityForResult(intent, TAKE_PHOTO);
     }
     /**
@@ -303,27 +307,7 @@ public class person_detail extends AppCompatActivity {
             newImagePath = imagePath;
             orc_bitmap = BitmapFactory.decodeFile(imagePath);//获取图片 // orc_bitmap = comp(BitmapFactory.decodeFile(imagePath)); //压缩图
             photo.setImageBitmap(orc_bitmap);
-            File ph = new File(imagePath);
-            ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                    .create(BrunoService.class)
-                    .upload(MultipartBody.Part.createFormData("file", id+".png", RequestBody.create(MediaType.parse("image/png"), new File(imagePath))) )
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Outcome>(){
-                        @Override
-                        public void onCompleted() {
 
-                        }
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("33",e.getMessage());
-                            //Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                        @Override
-                        public void onNext(Outcome outcome){
-
-                        }
-                    });
         } else {
             //Toast.makeText(this, "图片获取失败", Toast.LENGTH_LONG).show();
         }
