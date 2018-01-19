@@ -75,9 +75,6 @@ public class Main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -98,7 +95,6 @@ public class Main extends AppCompatActivity
         mFragments.add(TaskPoolFragment.newInstance());
         mFragments.add(ContactFragment.newInstance());
         mFragments.add(InfoFragment.newInstance());
-
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments, Arrays.asList(titles));
         mViewPager.setAdapter(fragmentAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -144,55 +140,27 @@ public class Main extends AppCompatActivity
                     tmp.scrollToPosition(0);
             }
         });
-        SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
-                Context.MODE_PRIVATE);
         final Menu menu1=navigationView.getMenu();
         MenuItem menuItem=menu1.findItem(R.id.nav_email);
         menuItem.setTitle("123");
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .getUserByName(sharedPref.getString("name",""))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Person>(){
+        menuItem=menu1.findItem(R.id.nav_user);
+        menuItem.setTitle("33");
+        menuItem=menu1.findItem(R.id.nav_state);
+        menuItem.setTitle("队员");
+        menuItem=menu1.findItem(R.id.nav_sex);
+        menuItem.setTitle("男");
+        new AlertDialog.Builder(Main.this)
+                .setTitle("通知")
+                .setMessage("请完善您的个人信息")
+                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
                     @Override
-                    public void onCompleted() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplication(),person_detail.class);
+                        startActivity(intent);
                     }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Person outcome) {
-                        if(outcome.age==0){
-                            new AlertDialog.Builder(Main.this)
-                                    .setTitle("通知")
-                                    .setMessage("请完善您的个人信息")
-                                    .setPositiveButton("确定",new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent = new Intent(getApplication(),person_detail.class);
-                                            startActivityForResult(intent,3333);
-                                        }
-                                    }).show();
-                        }
-                        else{
-                            MenuItem menuItem=menu1.findItem(R.id.nav_email);
-                            menuItem.setTitle(outcome.email);
-                            menuItem=menu1.findItem(R.id.nav_user);
-                            menuItem.setTitle(outcome.name);
-                            menuItem=menu1.findItem(R.id.nav_state);
-                            menuItem.setTitle(outcome.position.equals("leader")?"队长":"队员");
-                            menuItem=menu1.findItem(R.id.nav_sex);
-                            menuItem.setTitle(outcome.sex);
-                            ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                            Glide.with(getApplication()).load("http://172.18.92.176:3333/my.PNG").into(imageView);
-                        }
-                    }
-                });
+                }).show();
+
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -214,13 +182,8 @@ public class Main extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if(id == R.id.toolbar){
-
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
@@ -234,7 +197,6 @@ public class Main extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -270,39 +232,5 @@ public class Main extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        final Menu menu1=navigationView.getMenu();
-        SharedPreferences sharedPref = this.getSharedPreferences("MY_PREFERENCE",
-                Context.MODE_PRIVATE);
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .getUserByName(sharedPref.getString("name",""))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Person>(){
-                    @Override
-                    public void onCompleted() {
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Person outcome) {
-                            MenuItem menuItem=menu1.findItem(R.id.nav_email);
-                            menuItem.setTitle(outcome.email);
-                            menuItem=menu1.findItem(R.id.nav_user);
-                            menuItem.setTitle(outcome.name);
-                            menuItem=menu1.findItem(R.id.nav_state);
-                            menuItem.setTitle(outcome.position.equals("leader")?"队长":"队员");
-                            menuItem=menu1.findItem(R.id.nav_sex);
-                            menuItem.setTitle(outcome.sex);
-                            ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                            Glide.with(getApplication()).load("http://172.18.92.176:3333/my.PNG").into(imageView);
-                    }
-                });
-    }
+
 }

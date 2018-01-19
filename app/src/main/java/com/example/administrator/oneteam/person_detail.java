@@ -209,6 +209,7 @@ public class person_detail extends AppCompatActivity {
         LayoutInflater factor = LayoutInflater.from(person_detail.this);
         final View view_in = factor.inflate(R.layout.inflate, null);
         alertDialog= new AlertDialog.Builder(person_detail.this);
+        alertDialog.setTitle("修改信息");
         alertDialog.setPositiveButton("确定修改",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -150,7 +150,6 @@ public class task_detail extends AppCompatActivity {
                                            datalist1.add(tmp);
                                            commonAdapter1.notifyDataSetChanged();
                                        }
-
                                    }
                                });
                    }
