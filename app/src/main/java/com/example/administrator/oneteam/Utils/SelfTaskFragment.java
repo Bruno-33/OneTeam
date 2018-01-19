@@ -36,6 +36,7 @@ import com.example.administrator.oneteam.model.Task;
 import com.example.administrator.oneteam.task_detail;
 import com.example.administrator.oneteam.tools.CommonAdapter;
 import com.example.administrator.oneteam.tools.OneTeamCalendar;
+import com.example.administrator.oneteam.tools.OneTeamCalendarAdapter;
 import com.example.administrator.oneteam.tools.ViewHolder;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.FunGameBattleCityHeader;
@@ -52,7 +53,9 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,64 +92,7 @@ public class SelfTaskFragment extends Fragment {
     private OneTeamCalendar self_calender;
 
     int offset[]={0,0,0};
-    @SuppressLint("HandlerLeak")
-    //region 线程处理函数 Handler
-    final Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int tmp = msg.what/100;
-            int po=msg.what-tmp*100;
-            switch (tmp){
-                case 33:ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                        .create(BrunoService.class)
-                        .done_task(String.valueOf(datalist.get(po).task_id))
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<Outcome>(){
-                            @Override
-                            public void onCompleted() {
-                                offset[position]=0;
-                            }
-                            @Override
-                            public void onError(Throwable e) {
-                                Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-                            @Override
-                            public void onNext(Outcome outcome) {
 
-                            }
-                        });
-                    datalist.remove(po);
-                    commonAdapter.notifyDataSetChanged();
-                    break;
-                case 34:
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .undone_task(String.valueOf(datalist.get(po).task_id))
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<Outcome>(){
-                                @Override
-                                public void onCompleted() {
-                                    offset[position]=0;
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(Outcome outcome) {
-
-                                }
-                            });
-                    datalist.remove(po);
-                    commonAdapter.notifyDataSetChanged();
-                    break;
-            }
-
-        }
-    };
     //endregion
 
     /**
@@ -170,7 +116,17 @@ public class SelfTaskFragment extends Fragment {
         init_recyclerview();
         init_reflashview();
         init_window();
-
+        self_calender.setDateClickListener(new OneTeamCalendarAdapter.OnDateClickListener() {
+            @Override
+            public void onClick(View v) {
+                array[1].remove(array[1].size()-1);
+                change_datalist();
+                window.setVisibility(View.INVISIBLE);
+                choose.setTextColor(Color.parseColor("#000000"));
+                choose.setTag(0);
+                self_calender.setVisibility(View.GONE);
+            }
+        });
         return view;
     }
 
@@ -388,12 +344,10 @@ public class SelfTaskFragment extends Fragment {
                             title.setText(title.getText());
                             checkbox.setBackgroundResource(R.drawable.uncheck);
                             checkbox.setTag(0);
-                            handler.sendEmptyMessageDelayed(34*100+holder.getAdapterPosition(),1000);
                         }else{
                             title.setText(title.getText());
                             checkbox.setTag(1);
                             checkbox.setBackgroundResource(R.drawable.check);
-                            handler.sendEmptyMessageDelayed(33*100+holder.getAdapterPosition(),1000);
                         }
                     }
                 });
@@ -411,29 +365,6 @@ public class SelfTaskFragment extends Fragment {
             public void onLongClick(int position) {
             }
         });
-        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                .create(BrunoService.class)
-                .getTasks_done(3,0)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Task>>(){
-                    @Override
-                    public void onCompleted() {
-
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(List<Task> outcome) {
-                        for(int i=0;i< outcome.size();++i){
-                            array[position].add(outcome.get(i));
-                        }
-                        change_datalist();
-                        commonAdapter.notifyDataSetChanged();
-                    }
-                });
         self_task_rv.setAdapter(commonAdapter);
         self_task_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         commonAdapter.notifyDataSetChanged();
@@ -450,21 +381,6 @@ public class SelfTaskFragment extends Fragment {
     }
 
     
-    /**
-     * 子线程更新GreetingText
-     * 回调函数是Handler
-     */
-    private void setUpGreetingText(){
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = UPDATE_GREETING_TEXT;
-                handler.sendMessage(msg);
-                //每隔十分钟执行一次GreetingText的更新
-                handler.postDelayed(this, 1000*60*10);
-            }
-        };
-        runnable.run();
-    }
+
+
 }

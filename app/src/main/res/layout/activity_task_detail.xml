@@ -51,7 +51,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:id="@+id/task_checkbox"
-                android:background="@drawable/check"
+                android:background="@drawable/uncheck"
                 android:paddingEnd="20dp"
                 android:layout_marginStart="10dp"
                 />

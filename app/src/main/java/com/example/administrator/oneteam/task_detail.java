@@ -48,67 +48,7 @@ public class task_detail extends AppCompatActivity {
     Task task;
     List<TaskDetail> taskdetail;
     List<Person> thepersons;
-    final Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-           switch (msg.what){
-               case 0:
-                   ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                           .create(BrunoService.class)
-                           .getUser(String.valueOf(task.task_presenter_id))
-                           .subscribeOn(Schedulers.newThread())
-                           .observeOn(AndroidSchedulers.mainThread())
-                           .subscribe(new Subscriber<Person>(){
-                               @Override
-                               public void onCompleted() {
 
-                               }
-                               @Override
-                               public void onError(Throwable e) {
-                                   Log.e("313",e.getMessage());
-                                   Toast.makeText(task_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                               }
-                               @Override
-                               public void onNext(Person outcome){
-                                   presenter.setText(outcome.name);
-                               }
-                           });
-                   break;
-               case 1:
-                   for (int i=0;i<taskdetail.size();++i){
-                       ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                               .create(BrunoService.class)
-                               .getUser(String.valueOf(taskdetail.get(i).person_id))
-                               .subscribeOn(Schedulers.newThread())
-                               .observeOn(AndroidSchedulers.mainThread())
-                               .subscribe(new Subscriber<Person>(){
-                                   @Override
-                                   public void onCompleted() {
-
-                                   }
-                                   @Override
-                                   public void onError(Throwable e) {
-                                       Log.e("33",e.getMessage());
-                                       Toast.makeText(task_detail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                   }
-                                   @Override
-                                   public void onNext(Person outcome){
-                                       thepersons.add(outcome);
-
-                                   }
-                               });
-                   }
-                   int tmpsum=0;
-                   for (int i=0;i<taskdetail.size();++i){
-                        if(!taskdetail.get(i).finish_time.equals("undone")){
-                            tmpsum+=1;
-                        }
-                   }
-                   rate.setText(String.valueOf(tmpsum)+"/"+String.valueOf(taskdetail.size()));
-           }
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +71,7 @@ public class task_detail extends AppCompatActivity {
         commonAdapter.notifyDataSetChanged();
         tmp = new HashMap<>();
         tmp.put("name","Bruno");
-        tmp.put("state","未报销");
+        tmp.put("state","33元 未报销");
         datalist1.add(tmp);
         commonAdapter1.notifyDataSetChanged();
     }
@@ -175,10 +115,11 @@ public class task_detail extends AppCompatActivity {
                 if(datalist.size()==1){
                     Map<String,String> tmp;
                     tmp = new HashMap<>();
-                    tmp.put("name","33");
+                    tmp.put("name","Jack");
                     tmp.put("state","未完成");
                     datalist.add(tmp);
                     commonAdapter.notifyDataSetChanged();
+                    rate.setText("2/2");
                 }
             }
         });
@@ -186,8 +127,6 @@ public class task_detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(),add_expense.class);
-                intent.putExtra("id",String.valueOf(task.task_id));
-                intent.putExtra("name",task.task_name);
                 startActivityForResult(intent,33);
             }
         });
@@ -226,7 +165,7 @@ public class task_detail extends AppCompatActivity {
                     img.setImageResource(R.drawable.icon);
                 }
                 else{
-                    img.setImageResource(R.mipmap.phone);
+                    img.setImageResource(R.mipmap.photo);
                 }
                 state.setText(task.get("state"));
             }
@@ -250,7 +189,7 @@ public class task_detail extends AppCompatActivity {
                     img.setImageResource(R.drawable.icon);
                 }
                 else{
-                    img.setImageResource(R.mipmap.phone);
+                    img.setImageResource(R.mipmap.photo);
                 }
                 state.setText(task.get("state"));
             }
@@ -264,8 +203,6 @@ public class task_detail extends AppCompatActivity {
             }
         });
 
-
-
         budget_rv.setAdapter(commonAdapter1);
         budget_rv.setLayoutManager(new LinearLayoutManager(this));
         commonAdapter1.notifyDataSetChanged();
@@ -273,5 +210,22 @@ public class task_detail extends AppCompatActivity {
         person_rv.setAdapter(commonAdapter);
         person_rv.setLayoutManager(new LinearLayoutManager(this));
         commonAdapter.notifyDataSetChanged();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 33:
+                Map<String,String> tmp;
+                tmp = new HashMap<>();
+                tmp.put("name","Jack");
+                tmp.put("state","100元 未报销");
+                datalist1.add(tmp);
+                commonAdapter1.notifyDataSetChanged();
+                budget_rate.setText("133/500");
+                break;
+            default:
+                break;
+        }
     }
 }

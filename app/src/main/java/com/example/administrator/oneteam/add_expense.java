@@ -34,8 +34,8 @@ public class add_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
-        task_name = getIntent().getStringExtra("name");
-        id = getIntent().getStringExtra("id");
+        task_name = "无人机实现翻滚";
+        id = "48";
         input_ddl="";
         init_view();
         init_listener();
@@ -81,30 +81,6 @@ public class add_expense extends AppCompatActivity {
                     Toast.makeText(getApplication(),"部分信息没有输入，请完善后提交",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                            .create(BrunoService.class)
-                            .new_expense("48",id,money.getText().toString(),input_ddl,description.getText().toString())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<Outcome>(){
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                    Toast.makeText(add_expense.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onNext(Outcome outcome) {
-                                    if(outcome.stage.equals("TRUE")){
-
-                                    }
-                                    else{
-
-                                    }
-                                }
-                            });
                     finish();
                 }
 
