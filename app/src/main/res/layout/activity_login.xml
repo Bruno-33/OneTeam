@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/team_id"
-                android:hint="请输入团队id 123456"
+                android:hint="请输入团队id"
                 android:inputType="number"
 
                 />

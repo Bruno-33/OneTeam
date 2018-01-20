@@ -1,6 +1,11 @@
 package com.example.administrator.oneteam;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,20 +23,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.administrator.oneteam.Factory.ServiceFactory;
+import com.example.administrator.oneteam.Service.BrunoService;
 import com.example.administrator.oneteam.Utils.ContactFragment;
 import com.example.administrator.oneteam.Utils.FragmentAdapter;
 import com.example.administrator.oneteam.Utils.InfoFragment;
 import com.example.administrator.oneteam.Utils.SelfTaskFragment;
 import com.example.administrator.oneteam.Utils.TabFragment;
 import com.example.administrator.oneteam.Utils.TaskPoolFragment;
+import com.example.administrator.oneteam.model.Outcome;
+import com.example.administrator.oneteam.model.Person;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.example.administrator.oneteam.R.color.colorPrimary;
 
@@ -60,9 +75,6 @@ public class Main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -83,7 +95,6 @@ public class Main extends AppCompatActivity
         mFragments.add(TaskPoolFragment.newInstance());
         mFragments.add(ContactFragment.newInstance());
         mFragments.add(InfoFragment.newInstance());
-
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments, Arrays.asList(titles));
         mViewPager.setAdapter(fragmentAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -129,6 +140,26 @@ public class Main extends AppCompatActivity
                     tmp.scrollToPosition(0);
             }
         });
+        final Menu menu1=navigationView.getMenu();
+        MenuItem menuItem=menu1.findItem(R.id.nav_email);
+        menuItem.setTitle("123");
+        menuItem=menu1.findItem(R.id.nav_user);
+        menuItem.setTitle("Jack");
+        menuItem=menu1.findItem(R.id.nav_state);
+        menuItem.setTitle("队员");
+        menuItem=menu1.findItem(R.id.nav_sex);
+        menuItem.setTitle("18");
+        new AlertDialog.Builder(Main.this)
+                .setTitle("通知")
+                .setMessage("请完善您的个人信息")
+                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplication(),person_detail.class);
+                        startActivity(intent);
+                    }
+                }).show();
+
     }
 
     @Override
@@ -151,43 +182,55 @@ public class Main extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if(id == R.id.toolbar){
-
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             Toast.makeText(getApplication(),"功能尚未实现，敬请期待...",Toast.LENGTH_LONG).show();
             return true;
         }
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(this,add_task.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_email) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_email) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_user) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_sex) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
+            Intent intent = new Intent(this,person_detail.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

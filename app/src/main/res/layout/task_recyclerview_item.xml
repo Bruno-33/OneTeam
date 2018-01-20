@@ -8,16 +8,7 @@
     android:background="#FFFFFF"
     android:layout_marginTop="10dp"
     >
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:id="@+id/item_state"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/undone"
-            />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

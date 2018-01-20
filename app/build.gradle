@@ -21,14 +21,15 @@ android {
 }
 
 dependencies {
-    compile 'com.prolificinteractive:material-calendarview:1.4.3'
-    compile 'com.github.jiang111:IndicatorDialog:v1.3.8'
+
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //没有使用特殊Header，可以不加这行
+    compile 'com.prolificinteractive:material-calendarview:1.4.3'
+    compile 'com.github.jiang111:IndicatorDialog:v1.3.8'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -42,6 +43,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
-    testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
+    testCompile 'junit:junit:4.12'
 }

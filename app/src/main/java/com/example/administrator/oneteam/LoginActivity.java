@@ -1,5 +1,7 @@
 package com.example.administrator.oneteam;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.oneteam.Factory.ServiceFactory;
 import com.example.administrator.oneteam.Service.BrunoService;
 import com.example.administrator.oneteam.model.Outcome;
@@ -42,6 +46,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.example.administrator.oneteam.R.id.imageView;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
@@ -56,6 +62,24 @@ public class LoginActivity extends AppCompatActivity {
     private Handler mHandler;
     private String stage;
     private ProgressBar progressBar;
+    final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    progressBar.setVisibility(View.INVISIBLE);
+                    SharedPreferences sharedPref = getApplication().getSharedPreferences("MY_PREFERENCE",
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("name", et_userName.getText().toString());
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, Main.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         init();
         bindListeners();
         stage = "signin";
+
     }
 
     private void bindViews(){
@@ -79,37 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         init_toast();
-//        new Thread() {
-//            public  void run(){
-//                try {
-//                    final  Bitmap bm = http.downloadphoto("http://172.18.92.176:3333/my.PNG");
-//                    mHandler.post( new Runnable(){
-//                        public  void run() {
-//                            saveImage(bm,"my1.PNG");
-//                            if(loadImage("my1.PNG")!=null)
-//                                photo.setImageBitmap(loadImage("my1.PNG"));
-//                        }
-//                    });
-//                    Log.e("get",String.valueOf(33));
-//                    http.UploadPicture("http://172.18.92.176:3333/test",Environment.getExternalStorageDirectory().getAbsolutePath() + "/public/my1.PNG" );
-//                    Log.e("get",String.valueOf(35));
-//                }  catch (Exception e) {//异常处理
-//                    e.printStackTrace();
-//                    mHandler.post( new Runnable(){
-//                        public void run(){
-//                            btn_logIn.setText("433");
-//                        }
-//                    });
-//                }
-//            }
-//        }.start();
-//        if(loadImage("my1.PNG")!=null)
-//            photo.setImageBitmap(loadImage("my1.PNG"));
-//        else
-//            Log.e("22222222222","33333333333");
-
-//        btn_logIn = (Button) findViewById(R.id.log_in);
-
     }
     private void bindListeners(){
         btn_signUp.setOnClickListener(new View.OnClickListener() {
@@ -143,86 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     progressBar.setVisibility(View.VISIBLE);
-                    if(stage.equals("signin")){
-                        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                                .create(BrunoService.class)
-                                .signin(et_userName.getText().toString(),et_userPassword.getText().toString())
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Subscriber<Outcome>(){
-                                    @Override
-                                    public void onCompleted() {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                    }
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                    @Override
-                                    public void onNext(Outcome outcome) {
-                                        if(outcome.stage.equals("TRUE")){
-                                            Intent intent = new Intent(LoginActivity.this, Main.class);
-                                            startActivity(intent);
-                                        }
-                                        else{
-                                            toast(outcome.stage);
-                                        }
-                                    }
-                                });
-                    }
-                    else{
-                        ServiceFactory.getmRetrofit("http://172.18.92.176:3333")
-                                .create(BrunoService.class)
-                                .signup(et_userName.getText().toString(),et_userPassword.getText().toString(),et_team_id.getText().toString())
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Subscriber<Outcome>(){
-                                    @Override
-                                    public void onCompleted() {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                    }
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                    @Override
-                                    public void onNext(Outcome outcome) {
-                                        if(outcome.stage.equals("TRUE")){
-                                            Intent intent = new Intent(LoginActivity.this, Main.class);
-                                            startActivity(intent);
-                                        }
-                                        else
-                                             toast(outcome.stage);
-                                    }
-                                });
-                    }
+                    handler.sendEmptyMessageDelayed(0,1500);
                 }
-//
-//                new Thread() {
-//                    public  void run() {
-//                        try {
-//                            final InputStream is = http.conect("http://172.18.92.176:3333/user?name=Bruno");
-//                            final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//                            final String in = br.readLine();
-//                            mHandler.post( new Runnable(){
-//                                public  void run() {
-//                                    btn_logIn.setText(in);
-//                                }
-//                            });
-//
-//                        }  catch (Exception e) {//异常处理
-//                            mHandler.post( new Runnable() {
-//                                public void run() {
-//                                    btn_logIn.setText("233");
-//                                }
-//                            });
-//                        }
-//                    }
-//                }.start();
-                //Intent intent = new Intent(LoginActivity.this, Main.class);
-                //startActivity(intent);
             }
         });
 

@@ -6,7 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import java.util.Calendar;
+import android.icu.util.Calendar;
 import android.net.sip.SipAudioCall;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -38,7 +38,6 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -47,6 +46,7 @@ import android.os.Message;
 
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.Collection;
 
 
 import butterknife.BindView;
@@ -79,12 +79,14 @@ public class InfoFragment extends Fragment  {
     public List<CalendarDay> decoratedates;
     public View view;
     public Typeface typeface;
+
     public OnDateSelectedListener onDateSelectedListener ;
     Context context;
     public  MaterialCalendarView widget;
     //widget绑定calendarView
   //  @BindView(R.id.calendarView)
     //MaterialCalendarView widget;
+    public  int  daka_min;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -326,7 +328,7 @@ public class InfoFragment extends Fragment  {
                 }
             }
         });
-        thread.start();
+       thread.start();
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -349,10 +351,9 @@ public class InfoFragment extends Fragment  {
                                 start.setText(mm+":"+ss);
                             if(m>0 && s==0){
                                 //peiwei   周时间 月时间++
-                                /*
-                                day_time++;
-                                week_time ++;
-                                month_time++;*/
+                                day_time.setText(String.valueOf(m+0)+"分钟");
+                                week_time.setText(String.valueOf(m+11)+"分钟");;
+                                month_time.setText(String.valueOf(m+100)+"分钟");;
                             }
                         }catch (InternalError e){
                             e.printStackTrace();
